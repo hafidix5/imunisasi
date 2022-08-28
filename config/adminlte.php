@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'Imunisasi',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -85,7 +85,7 @@ return [
     'preloader' => [
         'enabled' => true,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'vendor/adminlte/dist/img/logo_imun.png',
             'alt' => 'AdminLTE Preloader Image',
             'effect' => 'animation__shake',
             'width' => 60,
@@ -186,13 +186,13 @@ return [
     |
     */
 
-    'sidebar_mini' => 'lg',
+    'sidebar_mini' => 'md',
     'sidebar_collapse' => false,
     'sidebar_collapse_auto_size' => false,
     'sidebar_collapse_remember' => false,
-    'sidebar_collapse_remember_no_transition' => true,
+    'sidebar_collapse_remember_no_transition' => false,
     'sidebar_scrollbar_theme' => 'os-theme-light',
-    'sidebar_scrollbar_auto_hide' => 'l',
+    'sidebar_scrollbar_auto_hide' => true,
     'sidebar_nav_accordion' => true,
     'sidebar_nav_animation_speed' => 300,
 
@@ -270,39 +270,65 @@ return [
         [
             'type'         => 'navbar-search',
             'text'         => 'search',
-            'topnav_right' => true,
+            'topnav_right' => false,
         ],
         [
             'type'         => 'fullscreen-widget',
-            'topnav_right' => true,
+            'topnav_right' => false,
         ],
 
         // Sidebar items:
         [
-            'type' => 'sidebar-menu-search',
-            'text' => 'search',
+            'text' => 'Dashboard',
+            'url'  => 'home',
+            'icon' => 'fa fa-home',
+        ],
+        
+        [
+            'text' => 'Data Ibu',
+            'url'  => 'ibus',
+            'icon' => 'fa fa-user',
         ],
         [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
+            'text' => 'Data Anak',
+            'url'  => 'anaks',
+            'icon' => 'fa fa-users',
         ],
         [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
-            'label'       => 4,
-            'label_color' => 'success',
+            'text' => 'Jadwal Imunisasi',
+            'url'  => 'jadwal_imunisasis',
+            'icon' => 'fa fa-calender',
         ],
+        [
+            'text' => 'Jenis Imunisasi',
+            'url'  => 'jenis_imunisasis',
+            'icon' => 'fa fa-calender',
+        ],
+        [
+            'text' => 'Pesan',
+            'url'  => 'pesans',
+            'icon' => 'fa fa-envelope',
+        ],
+        [
+            'text' => 'Riwayat Pesan',
+            'url'  => 'riwayat_pesans',
+            'icon' => 'fa fa-envelope',
+        ],
+        [
+            'text' => 'Wilayah Kerja',
+            'url'  => 'wilayah_kerjas',
+            'icon' => 'fa fa-envelope',
+        ],
+        
         ['header' => 'account_settings'],
         [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
+            'text' => 'Pengguna',
+            'url'  => 'users',
             'icon' => 'fas fa-fw fa-user',
         ],
         [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
+            'text' => 'Role',
+            'url'  => 'roles',
             'icon' => 'fas fa-fw fa-lock',
         ],
         [
@@ -438,6 +464,21 @@ return [
                     'type' => 'css',
                     'asset' => true,
                     'location' => 'vendor/datatables-plugins/buttons/css/buttons.bootstrap4.min.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables/js/jquery.dataTables.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables/js/dataTables.bootstrap4.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/datatables/css/dataTables.bootstrap4.min.css',
                 ],
             ],
         ],

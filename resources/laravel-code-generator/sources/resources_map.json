@@ -1,0 +1,42 @@
+[
+    {
+        "model-name": "riwayat_pesans",
+        "resource-file": "riwayat_pesans.json",
+        "table-name": "riwayat_pesans"
+    },
+    {
+        "model-name": "anak",
+        "resource-file": "anaks.json",
+        "table-name": "anaks"
+    },
+    {
+        "model-name": "jenis_imunisasi",
+        "resource-file": "jenis_imunisasis.json",
+        "table-name": "jenis_imunisasis"
+    },
+    {
+        "model-name": "wilayah_kerjas",
+        "resource-file": "wilayah_kerjas.json",
+        "table-name": "wilayah_kerjas"
+    },
+    {
+        "model-name": "users_wilayahs",
+        "resource-file": "users_wilayahs.json",
+        "table-name": "users_wilayahs"
+    },
+    {
+        "model-name": "ibus",
+        "resource-file": "ibuses.json",
+        "table-name": "ibuses"
+    },
+    {
+        "model-name": "ibu",
+        "resource-file": "ibus.json",
+        "table-name": "ibus"
+    },
+    {
+        "model-name": "jadwal_imunisasi",
+        "resource-file": "jadwal_imunisasis.json",
+        "table-name": "jadwal_imunisasis"
+    }
+]

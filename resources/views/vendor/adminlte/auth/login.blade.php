@@ -26,13 +26,14 @@
 
         {{-- Email field --}}
         <div class="input-group mb-3">
-            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
+            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" style="width:97%;
+  height:auto;"
                    value="{{ old('email') }}" placeholder="{{ __('adminlte::adminlte.email') }}" autofocus>
 
             <div class="input-group-append">
-                <div class="input-group-text">
+                
                     <span class="fas fa-envelope {{ config('adminlte.classes_auth_icon', '') }}"></span>
-                </div>
+                
             </div>
 
             @error('email')
@@ -44,13 +45,13 @@
 
         {{-- Password field --}}
         <div class="input-group mb-3">
-            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
+            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" style="width:97%;
+  height:auto;"
                    placeholder="{{ __('adminlte::adminlte.password') }}">
 
             <div class="input-group-append">
-                <div class="input-group-text">
                     <span class="fas fa-lock {{ config('adminlte.classes_auth_icon', '') }}"></span>
-                </div>
+               
             </div>
 
             @error('password')

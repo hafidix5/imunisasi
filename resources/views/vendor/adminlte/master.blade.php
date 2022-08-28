@@ -51,6 +51,7 @@
     {{-- Custom Stylesheets (post AdminLTE) --}}
     @yield('adminlte_css')
 
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" rel="stylesheet">
     {{-- Favicon --}}
     @if(config('adminlte.use_ico_only'))
         <link rel="shortcut icon" href="{{ asset('favicons/favicon.ico') }}" />
