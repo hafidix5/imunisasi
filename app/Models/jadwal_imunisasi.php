@@ -93,10 +93,10 @@ class jadwal_imunisasi extends Model
      * @param  string  $value
      * @return void
      */
-    public function setTanggalAttribute($value)
+  /*   public function setTanggalAttribute($value)
     {
         $this->attributes['tanggal'] = !empty($value) ? \DateTime::createFromFormat('[% date_format %]', $value) : null;
-    }
+    } */
 
     /**
      * Set the waktu_pemberian.
@@ -104,10 +104,10 @@ class jadwal_imunisasi extends Model
      * @param  string  $value
      * @return void
      */
-    public function setWaktuPemberianAttribute($value)
+  /*   public function setWaktuPemberianAttribute($value)
     {
         $this->attributes['waktu_pemberian'] = !empty($value) ? \DateTime::createFromFormat('[% date_format %]', $value) : null;
-    }
+    } */
 
     /**
      * Get tanggal in array format
@@ -115,10 +115,10 @@ class jadwal_imunisasi extends Model
      * @param  string  $value
      * @return array
      */
-    public function getTanggalAttribute($value)
+  /*   public function getTanggalAttribute($value)
     {
         return \DateTime::createFromFormat($this->getDateFormat(), $value)->format('j/n/Y g:i A');
-    }
+    } */
 
     /**
      * Get waktu_pemberian in array format
@@ -126,10 +126,10 @@ class jadwal_imunisasi extends Model
      * @param  string  $value
      * @return array
      */
-    public function getWaktuPemberianAttribute($value)
+    /* public function getWaktuPemberianAttribute($value)
     {
         return \DateTime::createFromFormat($this->getDateFormat(), $value)->format('j/n/Y g:i A');
-    }
+    } */
 
     /**
      * Get created_at in array format

@@ -19,7 +19,7 @@
         <div class="panel-heading clearfix">
 
             <div class="pull-left">
-                <h4 class="mt-5 mb-5">Riwayat Pesans</h4>
+                <h4 class="mt-5 mb-5">Riwayat Pesan</h4>
             </div>
 
             <div class="btn-group btn-group-sm pull-right" role="group">
@@ -32,7 +32,7 @@
         
         @if(count($riwayatPesansObjects) == 0)
             <div class="panel-body text-center">
-                <h4>No Riwayat Pesans Available.</h4>
+                <h4>Tidak ada Riwayat Pesans Tersedia.</h4>
             </div>
         @else
         <div class="panel-body panel-body-with-table">
@@ -41,8 +41,8 @@
                 <table class="table table-striped ">
                     <thead>
                         <tr>
-                            <th>Pesans</th>
-                            <th>Ibus</th>
+                            <th>Pesan</th>
+                            <th>Ibu</th>
 
                             <th></th>
                         </tr>

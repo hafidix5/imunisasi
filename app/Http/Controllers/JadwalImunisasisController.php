@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\jadwal_imunisasi;
 use Illuminate\Http\Request;
 use Exception;
+use auth;
 
 class JadwalImunisasisController extends Controller
 {
@@ -49,6 +50,7 @@ $Users = User::pluck('name','id')->all();
         try {
             
             $data = $this->getData($request);
+            $data['users_id']=auth::id();
             
             jadwal_imunisasi::create($data);
 
@@ -158,7 +160,6 @@ $Users = User::pluck('name','id')->all();
             'suhu' => 'nullable|numeric|min:-9|max:9',
             'status' => 'nullable|string|min:0|max:30',
             'keterangan' => 'nullable|string|min:0|max:50',
-            'users_id' => 'required', 
         ];
 
         

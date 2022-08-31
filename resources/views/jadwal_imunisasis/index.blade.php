@@ -19,7 +19,7 @@
         <div class="panel-heading clearfix">
 
             <div class="pull-left">
-                <h4 class="mt-5 mb-5">Jadwal Imunisasis</h4>
+                <h4 class="mt-5 mb-5">Jadwal Imunisasi</h4>
             </div>
 
             <div class="btn-group btn-group-sm pull-right" role="group">
@@ -32,7 +32,7 @@
         
         @if(count($jadwalImunisasis) == 0)
             <div class="panel-body text-center">
-                <h4>No Jadwal Imunisasis Available.</h4>
+                <h4>Tidak ada Jadwal Imunisasis Tersedia.</h4>
             </div>
         @else
         <div class="panel-body panel-body-with-table">

@@ -19,7 +19,7 @@
         <div class="panel-heading clearfix">
 
             <div class="pull-left">
-                <h4 class="mt-5 mb-5">Anaks</h4>
+                <h4 class="mt-5 mb-5">Data Anak</h4>
             </div>
 
             <div class="btn-group btn-group-sm pull-right" role="group">
@@ -32,7 +32,7 @@
         
         @if(count($anaks) == 0)
             <div class="panel-body text-center">
-                <h4>No Anaks Available.</h4>
+                <h4>Tidak ada Data Anak Tersedia.</h4>
             </div>
         @else
         <div class="panel-body panel-body-with-table">
@@ -44,7 +44,7 @@
                             <th>Nama</th>
                             <th>Tgl Lahir</th>
                             <th>Jenis Kelamin</th>
-                            <th>Ibus</th>
+                            <th>Ibu</th>
 
                             <th></th>
                         </tr>

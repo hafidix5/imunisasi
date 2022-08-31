@@ -7,7 +7,7 @@
         <div class="panel-heading clearfix">
 
             <div class="pull-left">
-                <h4 class="mt-5 mb-5">{{ !empty($title) ? $title : 'Pesans' }}</h4>
+                <h4 class="mt-5 mb-5">{{ !empty($title) ? $title : 'Pesan' }}</h4>
             </div>
             <div class="btn-group btn-group-sm pull-right" role="group">
 
@@ -41,7 +41,7 @@
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input class="btn btn-primary" type="submit" value="Update">
+                        <input class="btn btn-primary" type="submit" value="Simpan">
                     </div>
                 </div>
             </form>

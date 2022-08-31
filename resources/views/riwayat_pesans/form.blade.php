@@ -3,7 +3,7 @@
     <label for="pesans_id" class="col-md-2 control-label">Pesans</label>
     <div class="col-md-10">
         <select class="form-control" id="pesans_id" name="pesans_id" required="true">
-        	    <option value="" style="display: none;" {{ old('pesans_id', optional($riwayatPesans)->pesans_id ?: '') == '' ? 'selected' : '' }} disabled selected>Select pesans</option>
+        	    <option value="" style="display: none;" {{ old('pesans_id', optional($riwayatPesans)->pesans_id ?: '') == '' ? 'selected' : '' }} disabled selected>Pilih pesan</option>
         	@foreach ($Pesans as $key => $Pesan)
 			    <option value="{{ $key }}" {{ old('pesans_id', optional($riwayatPesans)->pesans_id) == $key ? 'selected' : '' }}>
 			    	{{ $Pesan }}
@@ -19,7 +19,7 @@
     <label for="ibus_id" class="col-md-2 control-label">Ibus</label>
     <div class="col-md-10">
         <select class="form-control" id="ibus_id" name="ibus_id" required="true">
-        	    <option value="" style="display: none;" {{ old('ibus_id', optional($riwayatPesans)->ibus_id ?: '') == '' ? 'selected' : '' }} disabled selected>Select ibus</option>
+        	    <option value="" style="display: none;" {{ old('ibus_id', optional($riwayatPesans)->ibus_id ?: '') == '' ? 'selected' : '' }} disabled selected>Pilih ibu</option>
         	@foreach ($Ibus as $key => $Ibu)
 			    <option value="{{ $key }}" {{ old('ibus_id', optional($riwayatPesans)->ibus_id) == $key ? 'selected' : '' }}>
 			    	{{ $Ibu }}

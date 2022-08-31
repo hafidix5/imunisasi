@@ -56,7 +56,7 @@ class riwayat_pesans extends Model
      */
     public function Pesan()
     {
-        return $this->belongsTo('App\Models\Pesan','pesans_id','id');
+        return $this->belongsTo('App\Models\pesans','pesans_id','id');
     }
 
     /**

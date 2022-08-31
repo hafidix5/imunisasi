@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Ibu;
-use App\Models\Pesan;
+use App\Models\Pesans;
 use App\Models\riwayat_pesans;
 use Illuminate\Http\Request;
 use Exception;
@@ -31,8 +31,8 @@ class RiwayatPesansController extends Controller
      */
     public function create()
     {
-        $Pesans = Pesan::pluck('jenis','id')->all();
-$Ibus = Ibu::pluck('id','id')->all();
+        $Pesans = Pesans::pluck('jenis','id')->all();
+        $Ibus = Ibu::pluck('nama','id')->all();
         
         return view('riwayat_pesans.create', compact('Pesans','Ibus'));
     }

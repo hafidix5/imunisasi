@@ -146,8 +146,8 @@ class JenisImunisasisController extends Controller
     {
         $rules = [
                 'nama' => 'required|string|min:1|max:30',
-            'waktu_tepat' => 'required|numeric|min:-9|max:9',
-            'waktu_telat' => 'required|numeric|min:-9|max:9',
+            'waktu_tepat' => 'required',
+            'waktu_telat' => 'required',
             'keterangan' => 'required|string|min:1|max:30', 
         ];
 
