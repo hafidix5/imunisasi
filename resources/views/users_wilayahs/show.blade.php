@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('adminlte::page')
 
 @section('content')
 
@@ -6,7 +6,7 @@
     <div class="panel-heading clearfix">
 
         <span class="pull-left">
-            <h4 class="mt-5 mb-5">{{ isset($title) ? $title : 'Users Wilayahs' }}</h4>
+            <h4 class="mt-5 mb-5">{{ isset($title) ? $title : 'Wilayah Pengguna' }}</h4>
         </span>
 
         <div class="pull-right">
@@ -39,8 +39,10 @@
 
     <div class="panel-body">
         <dl class="dl-horizontal">
-            <dt>Users</dt>
+            <dt>Pengguna</dt>
             <dd>{{ optional($usersWilayahs->User)->name }}</dd>
+            <dt>Wilayah Kerja</dt>
+            <dd>{{ optional($usersWilayahs->WilayahKerja)->nama }}</dd>
             <dt>Created At</dt>
             <dd>{{ $usersWilayahs->created_at }}</dd>
             <dt>Updated At</dt>

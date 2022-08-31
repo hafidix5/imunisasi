@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\users_wilayahs;
+use App\Models\wilayah_kerjas;
 use Illuminate\Http\Request;
 use Exception;
 
@@ -18,7 +19,7 @@ class UsersWilayahsController extends Controller
      */
     public function index()
     {
-        $usersWilayahsObjects = users_wilayahs::with('user')->paginate(25);
+        $usersWilayahsObjects = users_wilayahs::with('user','WilayahKerja')->paginate(25);
 
         return view('users_wilayahs.index', compact('usersWilayahsObjects'));
     }
@@ -31,8 +32,9 @@ class UsersWilayahsController extends Controller
     public function create()
     {
         $Users = User::pluck('name','id')->all();
+        $wilayah_kerjas = wilayah_kerjas::pluck('nama','id')->all();
         
-        return view('users_wilayahs.create', compact('Users'));
+        return view('users_wilayahs.create', compact('Users','wilayah_kerjas'));
     }
 
     /**
@@ -47,7 +49,7 @@ class UsersWilayahsController extends Controller
         try {
             
             $data = $this->getData($request);
-            
+            //dd($data);
             users_wilayahs::create($data);
 
             return redirect()->route('users_wilayahs.users_wilayahs.index')
@@ -84,8 +86,9 @@ class UsersWilayahsController extends Controller
     {
         $usersWilayahs = users_wilayahs::findOrFail($id);
         $Users = User::pluck('name','id')->all();
+        $wilayah_kerjas = wilayah_kerjas::pluck('nama','id')->all();
 
-        return view('users_wilayahs.edit', compact('usersWilayahs','Users'));
+        return view('users_wilayahs.edit', compact('usersWilayahs','Users','wilayah_kerjas'));
     }
 
     /**
@@ -147,6 +150,7 @@ class UsersWilayahsController extends Controller
     {
         $rules = [
                 'users_id' => 'required', 
+                'wilayah_kerjas_id'=>'required',
         ];
 
         

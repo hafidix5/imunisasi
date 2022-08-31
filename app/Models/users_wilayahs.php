@@ -31,7 +31,7 @@ class users_wilayahs extends Model
      * @var array
      */
     protected $fillable = [
-                  'users_id'
+                  'users_id','wilayah_kerjas_id'
               ];
 
     /**
@@ -55,7 +55,7 @@ class users_wilayahs extends Model
      */
     public function WilayahKerja()
     {
-        return $this->belongsTo('App\Models\WilayahKerja','wilayah_kerjas_id','id');
+        return $this->belongsTo('App\Models\wilayah_kerjas','wilayah_kerjas_id','id');
     }
 
     /**

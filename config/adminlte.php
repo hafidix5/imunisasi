@@ -297,12 +297,12 @@ return [
         [
             'text' => 'Jadwal Imunisasi',
             'url'  => 'jadwal_imunisasis',
-            'icon' => 'fa fa-calender',
+            'icon' => 'fa fa-calendar-check',
         ],
         [
             'text' => 'Jenis Imunisasi',
             'url'  => 'jenis_imunisasis',
-            'icon' => 'fa fa-calender',
+            'icon' => 'fa fa-bookmark',
         ],
         [
             'text' => 'Pesan',
@@ -312,12 +312,17 @@ return [
         [
             'text' => 'Riwayat Pesan',
             'url'  => 'riwayat_pesans',
-            'icon' => 'fa fa-envelope',
+            'icon' => 'fa fa-envelope-open',
         ],
         [
             'text' => 'Wilayah Kerja',
             'url'  => 'wilayah_kerjas',
-            'icon' => 'fa fa-envelope',
+            'icon' => 'fa fa-map',
+        ],
+        [
+            'text' => 'Pemetaan Wilayah Kerja',
+            'url'  => 'users_wilayahs',
+            'icon' => 'fa fa-globe',
         ],
         
         ['header' => 'account_settings'],

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('adminlte::page')
 
 @section('content')
 
@@ -19,7 +19,7 @@
         <div class="panel-heading clearfix">
 
             <div class="pull-left">
-                <h4 class="mt-5 mb-5">Users Wilayahs</h4>
+                <h4 class="mt-5 mb-5">Wilayah Pengguna</h4>
             </div>
 
             <div class="btn-group btn-group-sm pull-right" role="group">
@@ -32,7 +32,7 @@
         
         @if(count($usersWilayahsObjects) == 0)
             <div class="panel-body text-center">
-                <h4>No Users Wilayahs Available.</h4>
+                <h4>Tidak ada Wilayah Pengguna Tersedia.</h4>
             </div>
         @else
         <div class="panel-body panel-body-with-table">
@@ -41,8 +41,8 @@
                 <table class="table table-striped ">
                     <thead>
                         <tr>
-                            <th>Users</th>
-
+                            <th>Pengguna</th>
+                            <th>Wilayah kerja</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -50,6 +50,7 @@
                     @foreach($usersWilayahsObjects as $usersWilayahs)
                         <tr>
                             <td>{{ optional($usersWilayahs->User)->name }}</td>
+                            <td>{{ optional($usersWilayahs->WilayahKerja)->nama }}</td>
 
                             <td>
 
