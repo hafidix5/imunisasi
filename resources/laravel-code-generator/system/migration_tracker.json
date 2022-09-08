@@ -2316,9 +2316,9 @@
         "table-name": "jadwal_imunisasis",
         "migrations": [
             {
-                "name": "2022_08_28_143031_create_jadwal_imunisasis_table",
+                "name": "2022_09_06_125448_create_jadwal_imunisasis_table",
                 "class-name": "CreateJadwalImunisasesTable",
-                "path": "C:\\laragon\\www\\imunisasi\\database\\migrations\\2022_08_28_143031_create_jadwal_imunisasis_table.php",
+                "path": "C:\\laragon\\www\\imunisasi\\database\\migrations\\2022_09_06_125448_create_jadwal_imunisasis_table.php",
                 "is-create": true,
                 "is-virtual": true,
                 "is-organized": false,
@@ -2327,9 +2327,9 @@
                 "resource": {
                     "fields": [
                         {
-                            "name": "anaks_id",
-                            "labels": "Anaks",
-                            "html-type": "select",
+                            "name": "id",
+                            "labels": "Id",
+                            "html-type": "text",
                             "css-class": "",
                             "options": {},
                             "html-value": null,
@@ -2339,48 +2339,31 @@
                             "is-on-form": false,
                             "data-type": "string",
                             "data-type-params": [
-                                20
+                                10
                             ],
                             "data-value": null,
-                            "is-index": true,
+                            "is-index": false,
                             "is-unique": false,
                             "is-primary": true,
                             "comment": null,
                             "is-nullable": false,
                             "is-header": false,
                             "is-unsigned": true,
-                            "is-auto-increment": false,
+                            "is-auto-increment": true,
                             "is-inline-options": false,
                             "is-date": false,
                             "date-format": "",
                             "cast-as": "",
-                            "placeholder": "Select anaks",
+                            "placeholder": "Enter id here...",
                             "delimiter": "; ",
                             "range": [],
-                            "foreign-relation": {
-                                "name": "Anak",
-                                "type": "belongsTo",
-                                "params": [
-                                    "App\\Models\\Anak",
-                                    "anaks_id",
-                                    "id"
-                                ],
-                                "field": "nama"
-                            },
-                            "foreign-constraint": {
-                                "field": "anaks_id",
-                                "references": "anaks",
-                                "on": "id",
-                                "on-delete": "no action",
-                                "on-update": "no action",
-                                "references-model": "App\\Models\\Anak",
-                                "is-self-reference": false
-                            },
+                            "foreign-relation": null,
+                            "foreign-constraint": null,
                             "on-store": null,
                             "on-update": null,
-                            "api-key": "anaks_id",
+                            "api-key": "id",
                             "is-api-visible": true,
-                            "api-description": "The anaks of the model."
+                            "api-description": "The id of the model."
                         },
                         {
                             "name": "jenis_imunisasis_id",
@@ -2437,6 +2420,62 @@
                             "api-key": "jenis_imunisasis_id",
                             "is-api-visible": true,
                             "api-description": "The jenis imunisasis of the model."
+                        },
+                        {
+                            "name": "anaks_id",
+                            "labels": "Anaks",
+                            "html-type": "select",
+                            "css-class": "",
+                            "options": {},
+                            "html-value": null,
+                            "validation": "required",
+                            "is-on-index": true,
+                            "is-on-show": true,
+                            "is-on-form": true,
+                            "data-type": "string",
+                            "data-type-params": [
+                                20
+                            ],
+                            "data-value": null,
+                            "is-index": true,
+                            "is-unique": false,
+                            "is-primary": false,
+                            "comment": null,
+                            "is-nullable": false,
+                            "is-header": false,
+                            "is-unsigned": true,
+                            "is-auto-increment": false,
+                            "is-inline-options": false,
+                            "is-date": false,
+                            "date-format": "",
+                            "cast-as": "",
+                            "placeholder": "Select anaks",
+                            "delimiter": "; ",
+                            "range": [],
+                            "foreign-relation": {
+                                "name": "Anak",
+                                "type": "belongsTo",
+                                "params": [
+                                    "App\\Models\\Anak",
+                                    "anaks_id",
+                                    "id"
+                                ],
+                                "field": "nama"
+                            },
+                            "foreign-constraint": {
+                                "field": "anaks_id",
+                                "references": "anaks",
+                                "on": "id",
+                                "on-delete": "no action",
+                                "on-update": "no action",
+                                "references-model": "App\\Models\\Anak",
+                                "is-self-reference": false
+                            },
+                            "on-store": null,
+                            "on-update": null,
+                            "api-key": "anaks_id",
+                            "is-api-visible": true,
+                            "api-description": "The anaks of the model."
                         },
                         {
                             "name": "tempat",
@@ -2741,6 +2780,101 @@
                             "api-description": "The keterangan of the model."
                         },
                         {
+                            "name": "pesans_id",
+                            "labels": "Pesans",
+                            "html-type": "select",
+                            "css-class": "",
+                            "options": {},
+                            "html-value": null,
+                            "validation": "nullable",
+                            "is-on-index": true,
+                            "is-on-show": true,
+                            "is-on-form": true,
+                            "data-type": "string",
+                            "data-type-params": [
+                                20
+                            ],
+                            "data-value": null,
+                            "is-index": true,
+                            "is-unique": false,
+                            "is-primary": false,
+                            "comment": null,
+                            "is-nullable": true,
+                            "is-header": false,
+                            "is-unsigned": true,
+                            "is-auto-increment": false,
+                            "is-inline-options": false,
+                            "is-date": false,
+                            "date-format": "",
+                            "cast-as": "",
+                            "placeholder": "Select pesans",
+                            "delimiter": "; ",
+                            "range": [],
+                            "foreign-relation": {
+                                "name": "Pesan",
+                                "type": "belongsTo",
+                                "params": [
+                                    "App\\Models\\Pesan",
+                                    "pesans_id",
+                                    "id"
+                                ],
+                                "field": "jenis"
+                            },
+                            "foreign-constraint": {
+                                "field": "pesans_id",
+                                "references": "pesans",
+                                "on": "id",
+                                "on-delete": "no action",
+                                "on-update": "no action",
+                                "references-model": "App\\Models\\Pesan",
+                                "is-self-reference": false
+                            },
+                            "on-store": null,
+                            "on-update": null,
+                            "api-key": "pesans_id",
+                            "is-api-visible": true,
+                            "api-description": "The pesans of the model."
+                        },
+                        {
+                            "name": "status_pesan",
+                            "labels": "Status Pesan",
+                            "html-type": "text",
+                            "css-class": "",
+                            "options": {},
+                            "html-value": null,
+                            "validation": "nullable|string|min:0|max:1",
+                            "is-on-index": true,
+                            "is-on-show": true,
+                            "is-on-form": true,
+                            "data-type": "string",
+                            "data-type-params": [
+                                1
+                            ],
+                            "data-value": null,
+                            "is-index": false,
+                            "is-unique": false,
+                            "is-primary": false,
+                            "comment": null,
+                            "is-nullable": true,
+                            "is-header": false,
+                            "is-unsigned": false,
+                            "is-auto-increment": false,
+                            "is-inline-options": false,
+                            "is-date": false,
+                            "date-format": "",
+                            "cast-as": "",
+                            "placeholder": "Enter status pesan here...",
+                            "delimiter": "; ",
+                            "range": [],
+                            "foreign-relation": null,
+                            "foreign-constraint": null,
+                            "on-store": null,
+                            "on-update": null,
+                            "api-key": "status_pesan",
+                            "is-api-visible": true,
+                            "api-description": "The status pesan of the model."
+                        },
+                        {
                             "name": "users_id",
                             "labels": "Users",
                             "html-type": "select",
@@ -2876,7 +3010,7 @@
                             "type": "index",
                             "columns": [
                                 "anaks_id",
-                                "jenis_imunisasis_id"
+                                "id"
                             ]
                         }
                     ],

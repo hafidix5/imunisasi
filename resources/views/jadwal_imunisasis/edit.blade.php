@@ -1,4 +1,5 @@
 @extends('adminlte::page')
+
 @section('content')
 
     <div class="panel panel-default">
@@ -31,7 +32,7 @@
                 </ul>
             @endif
 
-            <form method="POST" action="{{ route('jadwal_imunisasis.jadwal_imunisasi.update', $jadwalImunisasi->anaks_id) }}" id="edit_jadwal_imunisasi_form" name="edit_jadwal_imunisasi_form" accept-charset="UTF-8" class="form-horizontal">
+            <form method="POST" action="{{ route('jadwal_imunisasis.jadwal_imunisasi.update', $jadwalImunisasi->id) }}" id="edit_jadwal_imunisasi_form" name="edit_jadwal_imunisasi_form" accept-charset="UTF-8" class="form-horizontal">
             {{ csrf_field() }}
             <input name="_method" type="hidden" value="PUT">
             @include ('jadwal_imunisasis.form', [
@@ -40,7 +41,7 @@
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input class="btn btn-primary" type="submit" value="Simpan">
+                        <input class="btn btn-primary" type="submit" value="Update">
                     </div>
                 </div>
             </form>

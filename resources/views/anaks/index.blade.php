@@ -38,7 +38,7 @@
         <div class="panel-body panel-body-with-table">
             <div class="table-responsive">
 
-                <table class="table table-striped ">
+                <table class="table table-striped " id="data_anak">
                     <thead>
                         <tr>
                             <th>Nama</th>
@@ -94,4 +94,19 @@
         @endif
     
     </div>
+    @push('js')
+    <script>
+        
+       /*  $('#data_anak').DataTable({
+            "responsive": true,
+            "paging": false,
+            "displayStart": false,
+        }); */
+
+        $("#data_anak").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    </script>
+@endpush
 @endsection

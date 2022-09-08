@@ -20,7 +20,7 @@ class jadwal_imunisasi extends Model
     *
     * @var string
     */
-    protected $primaryKey = 'anaks_id';
+    protected $primaryKey = 'id';
     protected $keyType = 'string';
     public $incrementing = false;
 
@@ -31,7 +31,9 @@ class jadwal_imunisasi extends Model
      * @var array
      */
     protected $fillable = [
+            'id',
                   'jenis_imunisasis_id',
+                  'anaks_id',
                   'tempat',
                   'tanggal',
                   'waktu_pemberian',
@@ -40,6 +42,8 @@ class jadwal_imunisasi extends Model
                   'suhu',
                   'status',
                   'keterangan',
+                  'pesans_id',
+                  'status_pesan',
                   'users_id'
               ];
 
@@ -58,6 +62,16 @@ class jadwal_imunisasi extends Model
     protected $casts = [];
     
     /**
+     * Get the JenisImunisasi for this model.
+     *
+     * @return App\Models\JenisImunisasi
+     */
+    public function JenisImunisasi()
+    {
+        return $this->belongsTo('App\Models\Jenis_Imunisasi','jenis_imunisasis_id','id');
+    }
+
+    /**
      * Get the Anak for this model.
      *
      * @return App\Models\Anak
@@ -68,13 +82,13 @@ class jadwal_imunisasi extends Model
     }
 
     /**
-     * Get the JenisImunisasi for this model.
+     * Get the Pesan for this model.
      *
-     * @return App\Models\JenisImunisasi
+     * @return App\Models\Pesan
      */
-    public function JenisImunisasi()
+    public function Pesan()
     {
-        return $this->belongsTo('App\Models\JenisImunisasi','jenis_imunisasis_id','id');
+        return $this->belongsTo('App\Models\Pesans','pesans_id','id');
     }
 
     /**
@@ -93,7 +107,7 @@ class jadwal_imunisasi extends Model
      * @param  string  $value
      * @return void
      */
-  /*   public function setTanggalAttribute($value)
+   /*  public function setTanggalAttribute($value)
     {
         $this->attributes['tanggal'] = !empty($value) ? \DateTime::createFromFormat('[% date_format %]', $value) : null;
     } */
@@ -104,7 +118,7 @@ class jadwal_imunisasi extends Model
      * @param  string  $value
      * @return void
      */
-  /*   public function setWaktuPemberianAttribute($value)
+   /*  public function setWaktuPemberianAttribute($value)
     {
         $this->attributes['waktu_pemberian'] = !empty($value) ? \DateTime::createFromFormat('[% date_format %]', $value) : null;
     } */

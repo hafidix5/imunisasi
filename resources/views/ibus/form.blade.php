@@ -50,7 +50,7 @@
 <div class="form-group {{ $errors->has('id_telegram') ? 'has-error' : '' }}">
     <label for="id_telegram" class="col-md-2 control-label">Id Telegram (jika ada)</label>
     <div class="col-md-10">
-        <input class="form-control" name="id_telegram" type="text" id="id_telegram" value="{{ old('id_telegram', optional($ibu)->id_telegram) }}" maxlength="40" placeholder="Ketik id telegram disini...">
+        <input class="form-control" name="id_telegram" type="number" id="id_telegram" value="{{$idtele}}" maxlength="40" placeholder="Ketik id telegram disini...">
         {!! $errors->first('id_telegram', '<p class="help-block">:message</p>') !!}
     </div>
 </div>

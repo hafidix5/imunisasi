@@ -11,6 +11,7 @@ use App\Http\Controllers\AnaksController;
 use App\Http\Controllers\JadwalImunisasisController;
 use App\Http\Controllers\JenisImunisasisController;
 use App\Http\Controllers\UsersWilayahsController;
+use App\Http\Controllers\TelegramBotController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,9 +24,11 @@ use App\Http\Controllers\UsersWilayahsController;
 |
 */
 
-Route::get('/', function () {
+/* Route::get('/', function () {
     return view('welcome');
-});
+}); */
+
+Route::get('/', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm']);
 
 Auth::routes();
 
@@ -206,3 +209,5 @@ Route::group([
     Route::delete('/users_wilayahs/{usersWilayahs}',[UsersWilayahsController::class, 'destroy'])
          ->name('users_wilayahs.users_wilayahs.destroy');
 });
+
+Route::get('/updated-activity', [App\Http\Controllers\TelegramBotController::class,'updatedActivity'])->name('updated-activity');

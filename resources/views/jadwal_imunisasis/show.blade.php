@@ -11,7 +11,7 @@
 
         <div class="pull-right">
 
-            <form method="POST" action="{!! route('jadwal_imunisasis.jadwal_imunisasi.destroy', $jadwalImunisasi->anaks_id) !!}" accept-charset="UTF-8">
+            <form method="POST" action="{!! route('jadwal_imunisasis.jadwal_imunisasi.destroy', $jadwalImunisasi->id) !!}" accept-charset="UTF-8">
             <input name="_method" value="DELETE" type="hidden">
             {{ csrf_field() }}
                 <div class="btn-group btn-group-sm" role="group">
@@ -23,7 +23,7 @@
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     </a>
                     
-                    <a href="{{ route('jadwal_imunisasis.jadwal_imunisasi.edit', $jadwalImunisasi->anaks_id ) }}" class="btn btn-primary" title="Edit Jadwal Imunisasi">
+                    <a href="{{ route('jadwal_imunisasis.jadwal_imunisasi.edit', $jadwalImunisasi->id ) }}" class="btn btn-primary" title="Edit Jadwal Imunisasi">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                     </a>
 
@@ -41,6 +41,8 @@
         <dl class="dl-horizontal">
             <dt>Jenis Imunisasis</dt>
             <dd>{{ optional($jadwalImunisasi->JenisImunisasi)->nama }}</dd>
+            <dt>Anaks</dt>
+            <dd>{{ optional($jadwalImunisasi->Anak)->nama }}</dd>
             <dt>Tempat</dt>
             <dd>{{ $jadwalImunisasi->tempat }}</dd>
             <dt>Tanggal</dt>
@@ -57,6 +59,10 @@
             <dd>{{ $jadwalImunisasi->status }}</dd>
             <dt>Keterangan</dt>
             <dd>{{ $jadwalImunisasi->keterangan }}</dd>
+            <dt>Pesans</dt>
+            <dd>{{ optional($jadwalImunisasi->Pesan)->jenis }}</dd>
+            <dt>Status Pesan</dt>
+            <dd>{{ $jadwalImunisasi->status_pesan }}</dd>
             <dt>Users</dt>
             <dd>{{ optional($jadwalImunisasi->User)->name }}</dd>
             <dt>Created At</dt>

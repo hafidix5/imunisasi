@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\jenis_imunisasi;
 use Illuminate\Http\Request;
 use Exception;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 class JenisImunisasisController extends Controller
 {
@@ -43,10 +44,12 @@ class JenisImunisasisController extends Controller
      */
     public function store(Request $request)
     {
+        
+        $id = IdGenerator::generate(['table' => 'jenis_imunisasis', 'length' => 7, 'prefix' =>'ji-']);
         try {
             
             $data = $this->getData($request);
-            
+            $data['id']=$id;
             jenis_imunisasi::create($data);
 
             return redirect()->route('jenis_imunisasis.jenis_imunisasi.index')

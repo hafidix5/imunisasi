@@ -8,6 +8,7 @@ use App\Models\ibu;
 use Illuminate\Http\Request;
 use Exception;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
+use Telegram\Bot\Laravel\Facades\Telegram;
 
 class IbusController extends Controller
 {
@@ -86,8 +87,16 @@ class IbusController extends Controller
     {
         $ibu = ibu::findOrFail($id);
         $WilayahKerjas = wilayah_kerjas::pluck('jenis','id')->all();
+        $activitys = Telegram::getUpdates();
+        foreach ($activitys as $activity) {
+            if($activity->message->text=="085274503739")
+            {
+                $idtele=$activity->message->chat->id;
+            }            
+        }
+        
 
-        return view('ibus.edit', compact('ibu','WilayahKerjas'));
+        return view('ibus.edit', compact('ibu','WilayahKerjas','idtele'));
     }
 
     /**

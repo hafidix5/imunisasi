@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\pesans;
 use Illuminate\Http\Request;
 use Exception;
+use auth;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 class PesansController extends Controller
 {
@@ -17,6 +19,7 @@ class PesansController extends Controller
      */
     public function index()
     {
+        //dd("Yth ".auth::id()." (nama ibu), jangan lupa besok (tanggal imunisasi) adalah jadwal imunisasi anak ibu atas nama : Nama Anak. Jenis imunisasi dasar lengkap : (Jenis imunisasi), tempat (tempat imunisasi) / posyandu terdekat ");
         $pesansObjects = pesans::paginate(25);
 
         return view('pesans.index', compact('pesansObjects'));
@@ -43,12 +46,14 @@ class PesansController extends Controller
      */
     public function store(Request $request)
     {
+        $id = IdGenerator::generate(['table' => 'pesans', 'length' => 7, 'prefix' =>'ps-']);
         try {
             
             $data = $this->getData($request);
+            $data['id']=$id;
             
             pesans::create($data);
-
+            
             return redirect()->route('pesans.pesans.index')
                 ->with('success_message', 'Pesans was successfully added.');
         } catch (Exception $exception) {
@@ -145,8 +150,8 @@ class PesansController extends Controller
     protected function getData(Request $request)
     {
         $rules = [
-                'jenis' => 'required|string|min:1|max:20',
-            'pesan' => 'required|string|min:1|max:160', 
+                'jenis' => 'required|string|min:1|max:50',
+            'pesan' => 'required|string|min:1|max:500', 
         ];
 
         

@@ -31,6 +31,7 @@ class jenis_imunisasi extends Model
      * @var array
      */
     protected $fillable = [
+                    'id',
                   'nama',
                   'waktu_tepat',
                   'waktu_telat',

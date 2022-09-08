@@ -18,15 +18,30 @@
 <div class="form-group {{ $errors->has('jenis_kelamin') ? 'has-error' : '' }}">
     <label for="jenis_kelamin" class="col-md-2 control-label">Jenis Kelamin</label>
     <div class="col-md-10">
-        <input class="form-control" name="jenis_kelamin" type="text" id="jenis_kelamin" value="{{ old('jenis_kelamin', optional($anak)->jenis_kelamin) }}" minlength="1" maxlength="20" required="true" placeholder="Ketik jenis kelamin disini...">
+        
         {!! $errors->first('jenis_kelamin', '<p class="help-block">:message</p>') !!}
+        <select class="form-control" id="jenis_kelamin" name="jenis_kelamin" required="true">
+            @if (optional($anak)->jenis_kelamin == 'l')
+                <option value="{{ optional($anak)->jenis_kelamin }}">Laki-Laki</option>
+            @else
+                @if (optional($anak)->jenis_kelamin == 'p')
+                    <option value="{{ optional($anak)->jenis_kelamin }}">Perempuan</option>
+                @else
+                    <option value="">Pilih Jenis Kelamin</option>
+                @endif
+
+            @endif
+            <option value="l">Laki-Laki</option>
+            <option value="p">Perempuan</option>
+        </select>
+    
     </div>
 </div>
 
 <div class="form-group {{ $errors->has('ibus_id') ? 'has-error' : '' }}">
     <label for="ibus_id" class="col-md-2 control-label">Ibu</label>
     <div class="col-md-10">
-        <select class="form-control" id="ibus_id" name="ibus_id" required="true">
+        <select class="form-responsive"  style="min-width:30%;max-width:90%" id="ibus_id" name="ibus_id" required="true">
         	    <option value="" style="display: none;" {{ old('ibus_id', optional($anak)->ibus_id ?: '') == '' ? 'selected' : '' }} disabled selected>Pilih Ibu</option>
         	@foreach ($Ibus as $key => $Ibu)
 			    <option value="{{ $key }}" {{ old('ibus_id', optional($anak)->ibus_id) == $key ? 'selected' : '' }}>

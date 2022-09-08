@@ -35,6 +35,11 @@
         "table-name": "ibus"
     },
     {
+        "model-name": "jadwal_imunisasis",
+        "resource-file": "jadwal_imunisases.json",
+        "table-name": "jadwal_imunisases"
+    },
+    {
         "model-name": "jadwal_imunisasi",
         "resource-file": "jadwal_imunisasis.json",
         "table-name": "jadwal_imunisasis"

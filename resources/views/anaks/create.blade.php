@@ -44,7 +44,14 @@
 
         </div>
     </div>
-
+    @push('js')
+    <script>
+        $(document).ready(function() {
+            $('#ibus_id').select2();
+        });
+       
+    </script>
+@endpush
 @endsection
 
 

@@ -10,7 +10,7 @@
 <div class="form-group {{ $errors->has('waktu_tepat') ? 'has-error' : '' }}">
     <label for="waktu_tepat" class="col-md-2 control-label">Waktu Tepat</label>
     <div class="col-md-10">
-        <input class="form-control" name="waktu_tepat" type="date" id="waktu_tepat" value="{{ old('waktu_tepat', optional($jenisImunisasi)->waktu_tepat) }}" min="-9" max="9" required="true" placeholder="Ketik waktu tepat disini...">
+        <input class="form-control" name="waktu_tepat" type="number" id="waktu_tepat" value="{{ old('waktu_tepat', optional($jenisImunisasi)->waktu_tepat) }}" min="-9" max="9" required="true" placeholder="Ketik waktu tepat disini...">
         {!! $errors->first('waktu_tepat', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
@@ -18,7 +18,7 @@
 <div class="form-group {{ $errors->has('waktu_telat') ? 'has-error' : '' }}">
     <label for="waktu_telat" class="col-md-2 control-label">Waktu Telat</label>
     <div class="col-md-10">
-        <input class="form-control" name="waktu_telat" type="date" id="waktu_telat" value="{{ old('waktu_telat', optional($jenisImunisasi)->waktu_telat) }}" min="-9" max="9" required="true" placeholder="Ketik waktu telat disini...">
+        <input class="form-control" name="waktu_telat" type="number" id="waktu_telat" value="{{ old('waktu_telat', optional($jenisImunisasi)->waktu_telat) }}" min="-9" max="9" required="true" placeholder="Ketik waktu telat disini...">
         {!! $errors->first('waktu_telat', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
