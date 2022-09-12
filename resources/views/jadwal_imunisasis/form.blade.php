@@ -75,7 +75,7 @@
 <div class="form-group {{ $errors->has('berat_badan') ? 'has-error' : '' }}">
     <label for="berat_badan" class="col-md-2 control-label">Berat Badan</label>
     <div class="col-md-10">
-        <input class="form-control" name="berat_badan" type="number" id="berat_badan" value="{{ old('berat_badan', optional($jadwalImunisasi)->berat_badan) }}" min="-9" max="9" {{$hide}}  placeholder="Enter berat badan here...">
+        <input class="form-control" name="berat_badan" type="decimal" id="berat_badan" value="{{ old('berat_badan', optional($jadwalImunisasi)->berat_badan) }}" min="0" max="40" {{$hide}}  placeholder="Enter berat badan here...">
         {!! $errors->first('berat_badan', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
@@ -83,7 +83,7 @@
 <div class="form-group {{ $errors->has('panjang_badan') ? 'has-error' : '' }}">
     <label for="panjang_badan" class="col-md-2 control-label">Panjang Badan</label>
     <div class="col-md-10">
-        <input class="form-control" name="panjang_badan" type="number" id="panjang_badan" value="{{ old('panjang_badan', optional($jadwalImunisasi)->panjang_badan) }}" min="-9" max="9" {{$hide}} placeholder="Enter panjang badan here...">
+        <input class="form-control" name="panjang_badan" type="decimal" id="panjang_badan" value="{{ old('panjang_badan', optional($jadwalImunisasi)->panjang_badan) }}" min="0" max="150" {{$hide}} placeholder="Enter panjang badan here...">
         {!! $errors->first('panjang_badan', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
@@ -91,7 +91,7 @@
 <div class="form-group {{ $errors->has('suhu') ? 'has-error' : '' }}">
     <label for="suhu" class="col-md-2 control-label">Suhu</label>
     <div class="col-md-10">
-        <input class="form-control" name="suhu" type="number" id="suhu" value="{{ old('suhu', optional($jadwalImunisasi)->suhu) }}" min="-9" max="9" {{$hide}}  placeholder="Enter suhu here...">
+        <input class="form-control" name="suhu" type="decimal" id="suhu" value="{{ old('suhu', optional($jadwalImunisasi)->suhu) }}"  {{$hide}}  placeholder="Enter suhu here...">
         {!! $errors->first('suhu', '<p class="help-block">:message</p>') !!}
     </div>
 </div>

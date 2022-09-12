@@ -16,6 +16,15 @@ class JenisImunisasisController extends Controller
      *
      * @return Illuminate\View\View
      */
+
+    function __construct()
+    {
+         $this->middleware('permission:jenisimunisasis-list|jenisimunisasis-create|jenisimunisasis-edit|jenisimunisasis-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:jenisimunisasis-create', ['only' => ['create','store']]);
+         $this->middleware('permission:jenisimunisasis-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:jenisimunisasis-delete', ['only' => ['destroy']]);
+    }
+
     public function index()
     {
         $jenisImunisasis = jenis_imunisasi::paginate(25);

@@ -21,12 +21,14 @@
             <div class="pull-left">
                 <h4 class="mt-5 mb-5">Jenis Imunisasi</h4>
             </div>
-
+            @can('jenisimunisasis-create')
             <div class="btn-group btn-group-sm pull-right" role="group">
                 <a href="{{ route('jenis_imunisasis.jenis_imunisasi.create') }}" class="btn btn-success" title="Create New Jenis Imunisasi">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 </a>
             </div>
+            @endcan
+           
 
         </div>
         
@@ -64,16 +66,25 @@
                                 {{ csrf_field() }}
 
                                     <div class="btn-group btn-group-xs pull-right" role="group">
+                                        @can('jenisimunisasis-list')
                                         <a href="{{ route('jenis_imunisasis.jenis_imunisasi.show', $jenisImunisasi->id ) }}" class="btn btn-info" title="Show Jenis Imunisasi">
                                             <span class="glyphicon glyphicon-open" aria-hidden="true"></span>
                                         </a>
+                                        @endcan
+                                        @can('jenisimunisasis-edit')
                                         <a href="{{ route('jenis_imunisasis.jenis_imunisasi.edit', $jenisImunisasi->id ) }}" class="btn btn-primary" title="Edit Jenis Imunisasi">
                                             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                         </a>
-
+                                        @endcan
+                                        @can('jenisimunisasis-delete')
                                         <button type="submit" class="btn btn-danger" title="Delete Jenis Imunisasi" onclick="return confirm(&quot;Click Ok to delete Jenis Imunisasi.&quot;)">
                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                         </button>
+                                        @endcan
+                                       
+                                        
+
+                                        
                                     </div>
 
                                 </form>

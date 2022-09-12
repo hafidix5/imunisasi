@@ -16,6 +16,15 @@ class WilayahKerjasController extends Controller
      *
      * @return Illuminate\View\View
      */
+
+    function __construct()
+    {
+         $this->middleware('permission:wilayahkerjas-list|wilayahkerjas-create|wilayahkerjas-edit|wilayahkerjas-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:wilayahkerjas-create', ['only' => ['create','store']]);
+         $this->middleware('permission:wilayahkerjas-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:wilayahkerjas-delete', ['only' => ['destroy']]);
+    }
+    
     public function index()
     {
         $wilayahKerjasObjects = wilayah_kerjas::paginate(25);

@@ -25,11 +25,44 @@ class JadwalImunisasisController extends Controller
      *
      * @return Illuminate\View\View
      */
+
+    function __construct()
+    {
+         $this->middleware('permission:jadwalimunisasis-list|jadwalimunisasis-create|jadwalimunisasis-edit|jadwalimunisasis-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:jadwalimunisasis-create', ['only' => ['create','store']]);
+         $this->middleware('permission:jadwalimunisasis-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:jadwalimunisasis-delete', ['only' => ['destroy']]);
+    }
+
     public function index()
     {
-        $jadwalImunisasis = jadwal_imunisasi::with('jenisimunisasi', 'anak', 'pesan', 'user')->paginate(25);
+        $cek_roles=DB::select('SELECT r.name FROM users AS u JOIN roles AS r ON u.id=r.id WHERE u.id=?',[auth::id()]);
+        $roles=$cek_roles[0]->name;
+        if($cek_roles[0]->name=='Admin')
+        {
+            $jadwalImunisasis = jadwal_imunisasi::with('jenisimunisasi', 'anak', 'pesan', 'user')->paginate(25);
+        }
+        else
+        {           
+            $jadwalImunisasis=DB::table('users as u')->join('jadwal_imunisasis as ji','ji.users_id','=','u.id')
+            ->join('anaks as an','ji.anaks_id','=','an.id')
+            ->join('jenis_imunisasis AS jim','ji.jenis_imunisasis_id','=','jim.id')
+            ->join('pesans AS p','ji.pesans_id','=','p.id')
+            ->select('jim.nama AS jenis','an.nama AS anak','ji.id','ji.tempat','ji.tanggal','ji.waktu_pemberian','ji.berat_badan',
+            'ji.panjang_badan','ji.status','ji.suhu','ji.status_pesan')
+            ->where('u.id',auth::id())->paginate(25);
+           /*  dd($jadwalImunisasis); 
+            $jadwalImunisasis=DB::select('SELECT jim.nama AS jenis, an.nama AS anak,ji.id, ji.tempat, ji.tanggal, 
+            ji.waktu_pemberian,ji.berat_badan,ji.panjang_badan,ji.status,ji.suhu,ji.status_pesan FROM users AS u 
+            JOIN jadwal_imunisasis AS ji ON u.id=ji.users_id
+            JOIN anaks AS an ON ji.anaks_id=an.id JOIN jenis_imunisasis AS jim on ji.jenis_imunisasis_id=jim.id
+            JOIN pesans AS p ON ji.pesans_id=p.id '); */
+            
+        }
 
-        return view('jadwal_imunisasis.index', compact('jadwalImunisasis'));
+        //$jadwalImunisasis = jadwal_imunisasi::with('jenisimunisasi', 'anak', 'pesan', 'user')->paginate(25);
+
+        return view('jadwal_imunisasis.index', compact('jadwalImunisasis','roles'));
     }
 
     /**
@@ -56,6 +89,20 @@ class JadwalImunisasisController extends Controller
      *
      * @return Illuminate\Http\RedirectResponse | Illuminate\Routing\Redirector
      */
+    public function send2($id)
+    {
+        $telegram = new Api('5619949340:AAHNn3zZ0qV0nUZFgc7-vQbFsMLizm7j0O8');
+        $data=DB::select('SELECT p.pesan, i.nama AS ibu,i.id_telegram,a.nama AS anak,jj.nama,ji.tanggal,ji.tempat FROM jadwal_imunisasis AS ji JOIN anaks AS a ON ji.anaks_id=a.id JOIN ibus AS i ON a.ibus_id=i.id JOIN pesans AS p ON ji.pesans_id=p.id
+        JOIN jenis_imunisasis AS jj ON ji.jenis_imunisasis_id=jj.id WHERE ji.id=?',[$id]);
+        
+       
+        $text = str_replace(["[nama ibu]","[tanggal imunisasi]","[nama anak]","[jenis imunisasi]","[tempat imunisasi]"], [$data[0]->ibu,$data[0]->tanggal,$data[0]->anak,$data[0]->nama,$data[0]->tempat],$data[0]->pesan);
+        $text="Mengingatkan Kembali ".$text;
+        $response = $telegram->sendMessage([
+            'chat_id' => $data[0]->id_telegram,
+            'text' => $text ,
+        ]);
+    }
 
     public function send($id)
     {
@@ -86,7 +133,7 @@ class JadwalImunisasisController extends Controller
             $data = $this->getData($request);
             $data['id'] = $id;
             $data['users_id'] = auth::id();
-            
+            $data['status_pesan'] = 0;
             jadwal_imunisasi::create($data);
             $this->send($id);
             return redirect()
@@ -97,6 +144,25 @@ class JadwalImunisasisController extends Controller
                 ->withInput()
                 ->withErrors(['unexpected_error' => 'Unexpected error occurred while trying to process your request.']);
         }
+    }
+
+    public function sync()
+    {
+        $total=0;
+        $datas=DB::select('SELECT p.pesan, i.nama AS ibu,i.id_telegram,a.nama AS anak,jj.nama,ji.tanggal,ji.tempat,ji.status_pesan,ji.id FROM jadwal_imunisasis AS ji JOIN anaks AS a ON ji.anaks_id=a.id JOIN ibus AS i ON a.ibus_id=i.id JOIN pesans AS p ON ji.pesans_id=p.id
+        JOIN jenis_imunisasis AS jj ON ji.jenis_imunisasis_id=jj.id WHERE ji.status_pesan=? AND ji.tanggal>?',['0','2022-09-12']);
+        foreach ($datas as  $data) {
+            $this->send2($data->id);
+            DB::table('jadwal_imunisasis')->where('id',$data->id)->update([
+                'status_pesan' => 1                
+            ]);
+            $total++;
+            
+        }
+
+        return redirect()->route('riwayat_pesans.riwayat_pesans.index')
+                ->with('success_message', 'Pesan telegram terkirim sebanyak: '.$total);
+        
     }
 
     /**
@@ -127,6 +193,10 @@ class JadwalImunisasisController extends Controller
         $JenisImunisasis = Jenis_Imunisasi::pluck('nama', 'id')->all();
         if ($jadwalImunisasi->tanggal >= $todayDate) {
             $hide = '';
+        }
+        else
+        {
+            $hide = 'readonly';
         }
         $Anaks = Anak::pluck('nama', 'id')->all();
         $Pesans = Pesans::pluck('jenis', 'id')->all();

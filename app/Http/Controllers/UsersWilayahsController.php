@@ -17,6 +17,14 @@ class UsersWilayahsController extends Controller
      *
      * @return Illuminate\View\View
      */
+    function __construct()
+    {
+         $this->middleware('permission:userswilayahs-list|userswilayahs-create|userswilayahs-edit|userswilayahs-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:userswilayahs-create', ['only' => ['create','store']]);
+         $this->middleware('permission:userswilayahs-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:userswilayahs-delete', ['only' => ['destroy']]);
+    }
+
     public function index()
     {
         $usersWilayahsObjects = users_wilayahs::with('user','WilayahKerja')->paginate(25);

@@ -9,13 +9,15 @@
             <span class="pull-left">
                 <h4 class="mt-5 mb-5">Create New Jadwal Imunisasi</h4>
             </span>
-
+            @can('jadwalimunisasis-create')
             <div class="btn-group btn-group-sm pull-right" role="group">
                 <a href="{{ route('jadwal_imunisasis.jadwal_imunisasi.index') }}" class="btn btn-primary"
                     title="Show All Jadwal Imunisasi">
                     <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
                 </a>
             </div>
+            @endcan
+           
 
         </div>
 

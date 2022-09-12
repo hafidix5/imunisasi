@@ -8,6 +8,7 @@ use App\Models\Pesans;
 use App\Models\riwayat_pesans;
 use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class RiwayatPesansController extends Controller
 {
@@ -19,7 +20,9 @@ class RiwayatPesansController extends Controller
      */
     public function index()
     {
-        $riwayatPesansObjects = riwayat_pesans::with('pesan','ibu')->paginate(25);
+        //$riwayatPesansObjects = riwayat_pesans::with('pesan','ibu')->paginate(25);
+        $riwayatPesansObjects=DB::select('SELECT p.jenis, i.nama AS ibu,i.id_telegram,a.nama AS anak,jj.nama,ji.tanggal,ji.tempat,ji.status_pesan,ji.id FROM jadwal_imunisasis AS ji JOIN anaks AS a ON ji.anaks_id=a.id JOIN ibus AS i ON a.ibus_id=i.id JOIN pesans AS p ON ji.pesans_id=p.id
+        JOIN jenis_imunisasis AS jj ON ji.jenis_imunisasis_id=jj.id WHERE ji.status_pesan=?',['1']);
 
         return view('riwayat_pesans.index', compact('riwayatPesansObjects'));
     }

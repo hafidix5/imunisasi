@@ -23,8 +23,8 @@
             </div>
 
             <div class="btn-group btn-group-sm pull-right" role="group">
-                <a href="{{ route('riwayat_pesans.riwayat_pesans.create') }}" class="btn btn-success" title="Create New Riwayat Pesans">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                <a href="{{ route('jadwal_imunisasis.jadwal_imunisasi.sync') }}" class="btn btn-success" title="Create New Riwayat Pesans">
+                    <span class="glyphicon glyphicon-sync" aria-hidden="true">Sync</span>
                 </a>
             </div>
 
@@ -38,11 +38,16 @@
         <div class="panel-body panel-body-with-table">
             <div class="table-responsive">
 
-                <table class="table table-striped ">
+                <table class="table table-striped " id="riwayat">
                     <thead>
                         <tr>
-                            <th>Pesan</th>
+                            <th>Jenis Pesan</th>
                             <th>Ibu</th>
+                            <th>Telegram</th>
+                            <th>Anak</th>
+                            <th>Imunisasi</th>
+                            <th>Tanggal</th>
+                            <th>Tempat</th>
 
                             <th></th>
                         </tr>
@@ -50,8 +55,13 @@
                     <tbody>
                     @foreach($riwayatPesansObjects as $riwayatPesans)
                         <tr>
-                            <td>{{ optional($riwayatPesans->Pesan)->jenis }}</td>
-                            <td>{{ optional($riwayatPesans->Ibu)->id }}</td>
+                            <td>{{ $riwayatPesans->jenis }}</td>
+                            <td>{{ $riwayatPesans->ibu }}</td>
+                            <td>{{ $riwayatPesans->id_telegram }}</td>
+                            <td>{{ $riwayatPesans->anak }}</td>
+                            <td>{{ $riwayatPesans->nama }}</td>
+                            <td>{{ $riwayatPesans->tanggal}}</td>
+                            <td>{{ $riwayatPesans->tempat}}</td>
 
                             <td>
 
@@ -59,7 +69,7 @@
                                 <input name="_method" value="DELETE" type="hidden">
                                 {{ csrf_field() }}
 
-                                    <div class="btn-group btn-group-xs pull-right" role="group">
+                                    {{-- <div class="btn-group btn-group-xs pull-right" role="group">
                                         <a href="{{ route('riwayat_pesans.riwayat_pesans.show', $riwayatPesans->id ) }}" class="btn btn-info" title="Show Riwayat Pesans">
                                             <span class="glyphicon glyphicon-open" aria-hidden="true"></span>
                                         </a>
@@ -70,7 +80,7 @@
                                         <button type="submit" class="btn btn-danger" title="Delete Riwayat Pesans" onclick="return confirm(&quot;Click Ok to delete Riwayat Pesans.&quot;)">
                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                         </button>
-                                    </div>
+                                    </div> --}}
 
                                 </form>
                                 
@@ -83,11 +93,20 @@
             </div>
         </div>
 
-        <div class="panel-footer">
+       {{--  <div class="panel-footer">
             {!! $riwayatPesansObjects->render() !!}
-        </div>
+        </div> --}}
         
         @endif
     
     </div>
+    @push('js')
+    <script>
+        
+        $('#riwayat').DataTable({
+            "responsive": true,  "autoWidth": true      
+    });
+    
+    </script>
+@endpush
 @endsection

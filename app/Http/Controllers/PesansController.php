@@ -17,6 +17,15 @@ class PesansController extends Controller
      *
      * @return Illuminate\View\View
      */
+
+    function __construct()
+    {
+         $this->middleware('permission:pesans-list|pesans-create|pesans-edit|pesans-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:pesans-create', ['only' => ['create','store']]);
+         $this->middleware('permission:pesans-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:pesans-delete', ['only' => ['destroy']]);
+    }
+
     public function index()
     {
         //dd("Yth ".auth::id()." (nama ibu), jangan lupa besok (tanggal imunisasi) adalah jadwal imunisasi anak ibu atas nama : Nama Anak. Jenis imunisasi dasar lengkap : (Jenis imunisasi), tempat (tempat imunisasi) / posyandu terdekat ");

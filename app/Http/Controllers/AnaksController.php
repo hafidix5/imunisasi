@@ -8,6 +8,8 @@ use App\Models\anak;
 use Illuminate\Http\Request;
 use Exception;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
+use Auth;
+use Illuminate\Support\Facades\DB;
 
 class AnaksController extends Controller
 {
@@ -17,9 +19,47 @@ class AnaksController extends Controller
      *
      * @return Illuminate\View\View
      */
+    function __construct()
+    {
+         $this->middleware('permission:anaks-list|anaks-create|anaks-edit|anaks-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:anaks-create', ['only' => ['create','store']]);
+         $this->middleware('permission:anaks-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:anaks-delete', ['only' => ['destroy']]);
+    }
     public function index()
     {
-        $anaks = anak::with('ibu')->paginate(25);
+        $cek_roles=DB::select('SELECT r.name FROM users AS u JOIN roles AS r ON u.id=r.id WHERE u.id=?',[auth::id()]);
+        if($cek_roles[0]->name=='Admin')
+        {
+           /*  $anaks=DB::select('SELECT an.id,an.nama,an.tgl_lahir,an.jenis_kelamin,i.nama AS ibu FROM users AS u JOIN users_wilayahs AS uw ON
+            u.id=uw.users_id JOIN wilayah_kerjas AS wk ON uw.wilayah_kerjas_id=wk.id
+            JOIN ibus AS i ON wk.id=i.wilayah_kerjas_id
+            JOIN anaks AS an ON i.id=an.ibus_id'); */
+            $anaks=DB::table('users as u')->join('users_wilayahs AS uw','u.id','=','uw.users_id')
+            ->join('wilayah_kerjas AS wk','uw.wilayah_kerjas_id','=','wk.id')
+            ->join('ibus as i','wk.id','=','i.wilayah_kerjas_id')
+            ->join('anaks as an','i.id','=','an.ibus_id')
+            ->select('an.id','an.nama','an.tgl_lahir','an.jenis_kelamin','i.nama as ibu')
+            ->paginate(25);
+        }
+        else
+        {            
+            $anaks=DB::table('users as u')->join('users_wilayahs AS uw','u.id','=','uw.users_id')
+            ->join('wilayah_kerjas AS wk','uw.wilayah_kerjas_id','=','wk.id')
+            ->join('ibus as i','wk.id','=','i.wilayah_kerjas_id')
+            ->join('anaks as an','i.id','=','an.ibus_id')
+            ->select('an.id','an.nama','an.tgl_lahir','an.jenis_kelamin','i.nama as ibu')
+            ->where('uw.users_id',auth::id())->paginate(25);
+            /* $anaks=DB::select('SELECT an.id,an.nama,an.tgl_lahir,an.jenis_kelamin,i.nama AS ibu FROM
+             users AS u JOIN users_wilayahs AS uw ON
+            u.id=uw.users_id JOIN wilayah_kerjas AS wk ON uw.wilayah_kerjas_id=wk.id
+            JOIN ibus AS i ON wk.id=i.wilayah_kerjas_id
+            JOIN anaks AS an ON i.id=an.ibus_id WHERE uw.users_id=?',[auth::id()]); */
+           
+            
+        }
+
+        
 
         return view('anaks.index', compact('anaks'));
     }

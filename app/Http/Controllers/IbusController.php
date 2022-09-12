@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Exception;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Telegram\Bot\Laravel\Facades\Telegram;
+use Auth;
+use Illuminate\Support\Facades\DB;
 
 class IbusController extends Controller
 {
@@ -18,9 +20,43 @@ class IbusController extends Controller
      *
      * @return Illuminate\View\View
      */
+
+    function __construct()
+    {
+         $this->middleware('permission:ibus-list|ibus-create|ibus-edit|ibus-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:ibus-create', ['only' => ['create','store']]);
+         $this->middleware('permission:ibus-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:ibus-delete', ['only' => ['destroy']]);
+    }
+
     public function index()
     {
-        $ibus = ibu::with('wilayahkerja')->paginate(25);
+        $cek_roles=DB::select('SELECT r.name FROM users AS u JOIN roles AS r ON u.id=r.id WHERE u.id=?',[auth::id()]);
+        if($cek_roles[0]->name=='Admin')
+        {
+            /* $ibus = ibu::with('wilayahkerja')->paginate(25); */
+            $ibus=DB::table('users as u')->join('users_wilayahs AS uw','u.id','=','uw.users_id')
+            ->join('wilayah_kerjas AS wk','uw.wilayah_kerjas_id','=','wk.id')
+            ->join('ibus AS i','wk.id','=','i.wilayah_kerjas_id')
+            ->select('i.id','i.nama','i.tgl_lahir','i.no_hp','i.alamat','i.id_telegram','wk.nama as wilayah')
+            ->paginate(25);
+        }
+        else
+        {            
+            $ibus=DB::table('users as u')->join('users_wilayahs AS uw','u.id','=','uw.users_id')
+            ->join('wilayah_kerjas AS wk','uw.wilayah_kerjas_id','=','wk.id')
+            ->join('ibus AS i','wk.id','=','i.wilayah_kerjas_id')
+            ->select('i.id','i.nama','i.tgl_lahir','i.no_hp','i.alamat','i.id_telegram','wk.nama as wilayah')
+            ->where('u.id',auth::id())->paginate(25);
+
+           /*  $ibus=DB::select('SELECT i.id,i.nama,i.tgl_lahir,i.no_hp,i.alamat,i.id_telegram,
+            wk.nama as wilayah FROM users AS u JOIN users_wilayahs AS uw ON
+            u.id=uw.users_id JOIN wilayah_kerjas AS wk ON uw.wilayah_kerjas_id=wk.id
+            JOIN ibus AS i ON wk.id=i.wilayah_kerjas_id WHERE uw.users_id=?',[auth::id()]); */
+            
+        }
+        
+        
 
         return view('ibus.index', compact('ibus'));
     }
@@ -33,8 +69,8 @@ class IbusController extends Controller
     public function create()
     {
         $WilayahKerjas = wilayah_kerjas::pluck('jenis','id')->all();
-        
-        return view('ibus.create', compact('WilayahKerjas'));
+        $idtele="";
+        return view('ibus.create', compact('WilayahKerjas','idtele'));
     }
 
     /**
@@ -88,11 +124,13 @@ class IbusController extends Controller
         $ibu = ibu::findOrFail($id);
         $WilayahKerjas = wilayah_kerjas::pluck('jenis','id')->all();
         $activitys = Telegram::getUpdates();
+        $idtele=null;
         foreach ($activitys as $activity) {
             if($activity->message->text=="085274503739")
             {
                 $idtele=$activity->message->chat->id;
-            }            
+            }  
+                  
         }
         
 

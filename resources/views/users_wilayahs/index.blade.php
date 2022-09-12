@@ -21,12 +21,14 @@
             <div class="pull-left">
                 <h4 class="mt-5 mb-5">Wilayah Pengguna</h4>
             </div>
-
+            @can('userswilayahs-create')
             <div class="btn-group btn-group-sm pull-right" role="group">
                 <a href="{{ route('users_wilayahs.users_wilayahs.create') }}" class="btn btn-success" title="Create New Users Wilayahs">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 </a>
             </div>
+            @endcan
+           
 
         </div>
         
@@ -59,16 +61,22 @@
                                 {{ csrf_field() }}
 
                                     <div class="btn-group btn-group-xs pull-right" role="group">
+                                        @can('userswilayahs-list')
                                         <a href="{{ route('users_wilayahs.users_wilayahs.show', $usersWilayahs->wilayah_kerjas_id ) }}" class="btn btn-info" title="Show Users Wilayahs">
                                             <span class="glyphicon glyphicon-open" aria-hidden="true"></span>
                                         </a>
+                                        @endcan
+                                        @can('userswilayahs-create')
                                         <a href="{{ route('users_wilayahs.users_wilayahs.edit', $usersWilayahs->wilayah_kerjas_id ) }}" class="btn btn-primary" title="Edit Users Wilayahs">
                                             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                         </a>
-
+                                        @endcan
+                                        @can('userswilayahs-delete')
                                         <button type="submit" class="btn btn-danger" title="Delete Users Wilayahs" onclick="return confirm(&quot;Click Ok to delete Users Wilayahs.&quot;)">
                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                         </button>
+                                        @endcan
+                                       
                                     </div>
 
                                 </form>
