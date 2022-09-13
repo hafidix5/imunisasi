@@ -73,7 +73,15 @@
                             <td>{{ $jadwalImunisasi->panjang_badan }}</td>
                             <td>{{ $jadwalImunisasi->suhu }}</td>
                             <td>{{ $jadwalImunisasi->status }}</td>
-                            <td>{{ $jadwalImunisasi->status_pesan }}</td>
+                            @if($jadwalImunisasi->status_pesan=='0')
+                            
+                                <td>Pertama</td>
+                            
+                            @else
+                            
+                                <td>Kedua</td>
+                            
+                            @endif
                             
                                 @else
                                 
@@ -86,7 +94,16 @@
                             <td>{{ $jadwalImunisasi->panjang_badan }}</td>
                             <td>{{ $jadwalImunisasi->suhu }}</td>
                             <td>{{ $jadwalImunisasi->status }}</td>
-                            <td>{{ $jadwalImunisasi->status_pesan }}</td>
+                            @if($jadwalImunisasi->status_pesan=='0')
+                            
+                                <td>Pertama</td>
+                            
+                            @else
+                            
+                                <td>Kedua</td>
+                            
+                            @endif
+                            
                                 
 
                             @endif

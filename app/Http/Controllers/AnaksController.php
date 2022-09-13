@@ -40,6 +40,7 @@ class AnaksController extends Controller
             ->join('ibus as i','wk.id','=','i.wilayah_kerjas_id')
             ->join('anaks as an','i.id','=','an.ibus_id')
             ->select('an.id','an.nama','an.tgl_lahir','an.jenis_kelamin','i.nama as ibu')
+            ->groupBy('an.id')
             ->paginate(25);
         }
         else

@@ -39,6 +39,7 @@ class IbusController extends Controller
             ->join('wilayah_kerjas AS wk','uw.wilayah_kerjas_id','=','wk.id')
             ->join('ibus AS i','wk.id','=','i.wilayah_kerjas_id')
             ->select('i.id','i.nama','i.tgl_lahir','i.no_hp','i.alamat','i.id_telegram','wk.nama as wilayah')
+            ->groupBy('i.id')
             ->paginate(25);
         }
         else

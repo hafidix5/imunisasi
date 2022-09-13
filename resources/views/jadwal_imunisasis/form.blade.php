@@ -2,7 +2,7 @@
 <div class="form-group {{ $errors->has('jenis_imunisasis_id') ? 'has-error' : '' }}">
     <label for="jenis_imunisasis_id" class="col-md-2 control-label">Jenis Imunisasis</label>
     <div class="col-md-10">
-        <select class="form-control" id="jenis_imunisasis_id" name="jenis_imunisasis_id" required="true">
+        <select class="form-control" id="jenis_imunisasis_id" name="jenis_imunisasis_id" required="true" {{$hide2}}>
         	    <option value="" style="display: none;" {{ old('jenis_imunisasis_id', optional($jadwalImunisasi)->jenis_imunisasis_id ?: '') == '' ? 'selected' : '' }} disabled selected>Select jenis imunisasis</option>
         	@foreach ($JenisImunisasis as $key => $JenisImunisasi)
 			    <option value="{{ $key }}" {{ old('jenis_imunisasis_id', optional($jadwalImunisasi)->jenis_imunisasis_id) == $key ? 'selected' : '' }}>
@@ -18,7 +18,7 @@
 <div class="form-group {{ $errors->has('anaks_id') ? 'has-error' : '' }}">
     <label for="anaks_id" class="col-md-2 control-label">Anaks</label>
     <div class="col-md-10">
-        <select class="form-control" id="anaks_id" name="anaks_id" required="true">
+        <select class="form-control" id="anaks_id" name="anaks_id" required="true" {{$hide2}}>
         	    <option value="" style="display: none;" {{ old('anaks_id', optional($jadwalImunisasi)->anaks_id ?: '') == '' ? 'selected' : '' }} disabled selected>Select anaks</option>
         	@foreach ($Anaks as $key => $Anak)
 			    <option value="{{ $key }}" {{ old('anaks_id', optional($jadwalImunisasi)->anaks_id) == $key ? 'selected' : '' }}>
@@ -34,7 +34,7 @@
 <div class="form-group {{ $errors->has('tempat') ? 'has-error' : '' }}">
     <label for="tempat" class="col-md-2 control-label">Tempat</label>
     <div class="col-md-10">
-        <input class="form-control" name="tempat" type="text" id="tempat" value="{{ old('tempat', optional($jadwalImunisasi)->tempat) }}" minlength="1" maxlength="50" required="true" placeholder="Enter tempat here...">
+        <input class="form-control" name="tempat" type="text" id="tempat" {{$hide2}} value="{{ old('tempat', optional($jadwalImunisasi)->tempat) }}" minlength="1" maxlength="50" required="true" placeholder="Enter tempat here...">
         {!! $errors->first('tempat', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
@@ -42,7 +42,7 @@
 <div class="form-group {{ $errors->has('tanggal') ? 'has-error' : '' }}">
     <label for="tanggal" class="col-md-2 control-label">Tanggal</label>
     <div class="col-md-10">
-        <input class="form-control" name="tanggal" type="date" id="tanggal" min={{$todayDate}} value="{{ old('tanggal', optional($jadwalImunisasi)->tanggal) }}" required="true" placeholder="Enter tanggal here...">
+        <input class="form-control" name="tanggal" type="date" id="tanggal" min={{$todayDate}} {{$hide2}} value="{{ old('tanggal', optional($jadwalImunisasi)->tanggal) }}" required="true" placeholder="Enter tanggal here...">
         {!! $errors->first('tanggal', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
@@ -50,7 +50,7 @@
 <div class="form-group {{ $errors->has('pesans_id') ? 'has-error' : '' }}">
     <label for="pesans_id" class="col-md-2 control-label">Pesans</label>
     <div class="col-md-10">
-        <select class="form-control" id="pesans_id" name="pesans_id">
+        <select class="form-control" id="pesans_id" name="pesans_id" {{$hide2}}>
         	    <option value="" style="display: none;" {{ old('pesans_id', optional($jadwalImunisasi)->pesans_id ?: '') == '' ? 'selected' : '' }} disabled selected>Select pesans</option>
         	@foreach ($Pesans as $key => $Pesan)
 			    <option value="{{ $key }}" {{ old('pesans_id', optional($jadwalImunisasi)->pesans_id) == $key ? 'selected' : '' }}>
@@ -96,13 +96,13 @@
     </div>
 </div>
 
-<div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
+{{-- <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
     <label for="status" class="col-md-2 control-label">Status</label>
     <div class="col-md-10">
         <input class="form-control" name="status" type="text" id="status" value="{{ old('status', optional($jadwalImunisasi)->status) }}" maxlength="30" {{$hide}}  placeholder="Enter status here...">
         {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
     </div>
-</div>
+</div> --}}
 
 <div class="form-group {{ $errors->has('keterangan') ? 'has-error' : '' }}">
     <label for="keterangan" class="col-md-2 control-label">Keterangan</label>

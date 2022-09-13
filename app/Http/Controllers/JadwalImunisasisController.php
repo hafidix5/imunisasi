@@ -16,7 +16,7 @@ use Carbon\Carbon;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use Telegram\Bot\Api;
 use Illuminate\Support\Facades\DB;
-use str;
+use Str;
 
 class JadwalImunisasisController extends Controller
 {
@@ -28,41 +28,38 @@ class JadwalImunisasisController extends Controller
 
     function __construct()
     {
-         $this->middleware('permission:jadwalimunisasis-list|jadwalimunisasis-create|jadwalimunisasis-edit|jadwalimunisasis-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:jadwalimunisasis-create', ['only' => ['create','store']]);
-         $this->middleware('permission:jadwalimunisasis-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:jadwalimunisasis-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:jadwalimunisasis-list|jadwalimunisasis-create|jadwalimunisasis-edit|jadwalimunisasis-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:jadwalimunisasis-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:jadwalimunisasis-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:jadwalimunisasis-delete', ['only' => ['destroy']]);
     }
 
     public function index()
     {
-        $cek_roles=DB::select('SELECT r.name FROM users AS u JOIN roles AS r ON u.id=r.id WHERE u.id=?',[auth::id()]);
-        $roles=$cek_roles[0]->name;
-        if($cek_roles[0]->name=='Admin')
-        {
+        $cek_roles = DB::select('SELECT r.name FROM users AS u JOIN roles AS r ON u.id=r.id WHERE u.id=?', [auth::id()]);
+        $roles = $cek_roles[0]->name;
+        if ($cek_roles[0]->name == 'Admin') {
             $jadwalImunisasis = jadwal_imunisasi::with('jenisimunisasi', 'anak', 'pesan', 'user')->paginate(25);
-        }
-        else
-        {           
-            $jadwalImunisasis=DB::table('users as u')->join('jadwal_imunisasis as ji','ji.users_id','=','u.id')
-            ->join('anaks as an','ji.anaks_id','=','an.id')
-            ->join('jenis_imunisasis AS jim','ji.jenis_imunisasis_id','=','jim.id')
-            ->join('pesans AS p','ji.pesans_id','=','p.id')
-            ->select('jim.nama AS jenis','an.nama AS anak','ji.id','ji.tempat','ji.tanggal','ji.waktu_pemberian','ji.berat_badan',
-            'ji.panjang_badan','ji.status','ji.suhu','ji.status_pesan')
-            ->where('u.id',auth::id())->paginate(25);
-           /*  dd($jadwalImunisasis); 
-            $jadwalImunisasis=DB::select('SELECT jim.nama AS jenis, an.nama AS anak,ji.id, ji.tempat, ji.tanggal, 
-            ji.waktu_pemberian,ji.berat_badan,ji.panjang_badan,ji.status,ji.suhu,ji.status_pesan FROM users AS u 
+        } else {
+            $jadwalImunisasis = DB::table('users as u')
+                ->join('jadwal_imunisasis as ji', 'ji.users_id', '=', 'u.id')
+                ->join('anaks as an', 'ji.anaks_id', '=', 'an.id')
+                ->join('jenis_imunisasis AS jim', 'ji.jenis_imunisasis_id', '=', 'jim.id')
+                ->join('pesans AS p', 'ji.pesans_id', '=', 'p.id')
+                ->select('jim.nama AS jenis', 'an.nama AS anak', 'ji.id', 'ji.tempat', 'ji.tanggal', 'ji.waktu_pemberian', 'ji.berat_badan', 'ji.panjang_badan', 'ji.status', 'ji.suhu', 'ji.status_pesan')
+                ->where('u.id', auth::id())
+                ->paginate(25);
+            /*  dd($jadwalImunisasis);
+            $jadwalImunisasis=DB::select('SELECT jim.nama AS jenis, an.nama AS anak,ji.id, ji.tempat, ji.tanggal,
+            ji.waktu_pemberian,ji.berat_badan,ji.panjang_badan,ji.status,ji.suhu,ji.status_pesan FROM users AS u
             JOIN jadwal_imunisasis AS ji ON u.id=ji.users_id
             JOIN anaks AS an ON ji.anaks_id=an.id JOIN jenis_imunisasis AS jim on ji.jenis_imunisasis_id=jim.id
             JOIN pesans AS p ON ji.pesans_id=p.id '); */
-            
         }
 
         //$jadwalImunisasis = jadwal_imunisasi::with('jenisimunisasi', 'anak', 'pesan', 'user')->paginate(25);
 
-        return view('jadwal_imunisasis.index', compact('jadwalImunisasis','roles'));
+        return view('jadwal_imunisasis.index', compact('jadwalImunisasis', 'roles'));
     }
 
     /**
@@ -92,38 +89,41 @@ class JadwalImunisasisController extends Controller
     public function send2($id)
     {
         $telegram = new Api('5619949340:AAHNn3zZ0qV0nUZFgc7-vQbFsMLizm7j0O8');
-        $data=DB::select('SELECT p.pesan, i.nama AS ibu,i.id_telegram,a.nama AS anak,jj.nama,ji.tanggal,ji.tempat FROM jadwal_imunisasis AS ji JOIN anaks AS a ON ji.anaks_id=a.id JOIN ibus AS i ON a.ibus_id=i.id JOIN pesans AS p ON ji.pesans_id=p.id
-        JOIN jenis_imunisasis AS jj ON ji.jenis_imunisasis_id=jj.id WHERE ji.id=?',[$id]);
-        
-       
-        $text = str_replace(["[nama ibu]","[tanggal imunisasi]","[nama anak]","[jenis imunisasi]","[tempat imunisasi]"], [$data[0]->ibu,$data[0]->tanggal,$data[0]->anak,$data[0]->nama,$data[0]->tempat],$data[0]->pesan);
-        $text="Mengingatkan Kembali ".$text;
+        $data = DB::select(
+            'SELECT p.pesan, i.nama AS ibu,i.id_telegram,a.nama AS anak,jj.nama,ji.tanggal,ji.tempat FROM jadwal_imunisasis AS ji JOIN anaks AS a ON ji.anaks_id=a.id JOIN ibus AS i ON a.ibus_id=i.id JOIN pesans AS p ON ji.pesans_id=p.id
+        JOIN jenis_imunisasis AS jj ON ji.jenis_imunisasis_id=jj.id WHERE ji.id=?',
+            [$id],
+        );
+
+        $text = str_replace(['[nama ibu]', '[tanggal imunisasi]', '[nama anak]', '[jenis imunisasi]', '[tempat imunisasi]'], [$data[0]->ibu, $data[0]->tanggal, $data[0]->anak, $data[0]->nama, $data[0]->tempat], $data[0]->pesan);
+        $text = 'Mengingatkan Kembali ' . $text;
         $response = $telegram->sendMessage([
             'chat_id' => $data[0]->id_telegram,
-            'text' => $text ,
+            'text' => $text,
         ]);
     }
 
     public function send($id)
     {
         $telegram = new Api('5619949340:AAHNn3zZ0qV0nUZFgc7-vQbFsMLizm7j0O8');
-        $data=DB::select('SELECT p.pesan, i.nama AS ibu,i.id_telegram,a.nama AS anak,jj.nama,ji.tanggal,ji.tempat FROM jadwal_imunisasis AS ji JOIN anaks AS a ON ji.anaks_id=a.id JOIN ibus AS i ON a.ibus_id=i.id JOIN pesans AS p ON ji.pesans_id=p.id
-        JOIN jenis_imunisasis AS jj ON ji.jenis_imunisasis_id=jj.id WHERE ji.id=?',[$id]);
-        
-       
-        $text = str_replace(["[nama ibu]","[tanggal imunisasi]","[nama anak]","[jenis imunisasi]","[tempat imunisasi]"], [$data[0]->ibu,$data[0]->tanggal,$data[0]->anak,$data[0]->nama,$data[0]->tempat],$data[0]->pesan);
+        $data = DB::select(
+            'SELECT p.pesan, i.nama AS ibu,i.id_telegram,a.nama AS anak,jj.nama,ji.tanggal,ji.tempat FROM jadwal_imunisasis AS ji JOIN anaks AS a ON ji.anaks_id=a.id JOIN ibus AS i ON a.ibus_id=i.id JOIN pesans AS p ON ji.pesans_id=p.id
+        JOIN jenis_imunisasis AS jj ON ji.jenis_imunisasis_id=jj.id WHERE ji.id=?',
+            [$id],
+        );
+
+        $text = str_replace(['[nama ibu]', '[tanggal imunisasi]', '[nama anak]', '[jenis imunisasi]', '[tempat imunisasi]'], [$data[0]->ibu, $data[0]->tanggal, $data[0]->anak, $data[0]->nama, $data[0]->tempat], $data[0]->pesan);
 
         $response = $telegram->sendMessage([
             'chat_id' => $data[0]->id_telegram,
-            'text' => $text ,
+            'text' => $text,
         ]);
     }
     public function store(Request $request)
     {
-        $cekdata=DB::select('SELECT count(*) as jumlah from jadwal_imunisasis where jenis_imunisasis_id=? and anaks_id=?', [$request->jenis_imunisasis_id,$request->anaks_id]);
-        
-        if($cekdata[0]->jumlah>0)
-        {
+        $cekdata = DB::select('SELECT count(*) as jumlah from jadwal_imunisasis where jenis_imunisasis_id=? and anaks_id=?', [$request->jenis_imunisasis_id, $request->anaks_id]);
+
+        if ($cekdata[0]->jumlah > 0) {
             return back()
                 ->withInput()
                 ->withErrors(['Data sudah ada']);
@@ -148,21 +148,25 @@ class JadwalImunisasisController extends Controller
 
     public function sync()
     {
-        $total=0;
-        $datas=DB::select('SELECT p.pesan, i.nama AS ibu,i.id_telegram,a.nama AS anak,jj.nama,ji.tanggal,ji.tempat,ji.status_pesan,ji.id FROM jadwal_imunisasis AS ji JOIN anaks AS a ON ji.anaks_id=a.id JOIN ibus AS i ON a.ibus_id=i.id JOIN pesans AS p ON ji.pesans_id=p.id
-        JOIN jenis_imunisasis AS jj ON ji.jenis_imunisasis_id=jj.id WHERE ji.status_pesan=? AND ji.tanggal>?',['0','2022-09-12']);
-        foreach ($datas as  $data) {
+        $total = 0;
+        $datas = DB::select(
+            'SELECT p.pesan, i.nama AS ibu,i.id_telegram,a.nama AS anak,jj.nama,ji.tanggal,ji.tempat,ji.status_pesan,ji.id FROM jadwal_imunisasis AS ji JOIN anaks AS a ON ji.anaks_id=a.id JOIN ibus AS i ON a.ibus_id=i.id JOIN pesans AS p ON ji.pesans_id=p.id
+        JOIN jenis_imunisasis AS jj ON ji.jenis_imunisasis_id=jj.id WHERE ji.status_pesan=? AND ji.tanggal>?',
+            ['0', '2022-09-12'],
+        );
+        foreach ($datas as $data) {
             $this->send2($data->id);
-            DB::table('jadwal_imunisasis')->where('id',$data->id)->update([
-                'status_pesan' => 1                
-            ]);
+            DB::table('jadwal_imunisasis')
+                ->where('id', $data->id)
+                ->update([
+                    'status_pesan' => 1,
+                ]);
             $total++;
-            
         }
 
-        return redirect()->route('riwayat_pesans.riwayat_pesans.index')
-                ->with('success_message', 'Pesan telegram terkirim sebanyak: '.$total);
-        
+        return redirect()
+            ->route('riwayat_pesans.riwayat_pesans.index')
+            ->with('success_message', 'Pesan telegram terkirim sebanyak: ' . $total);
     }
 
     /**
@@ -191,18 +195,18 @@ class JadwalImunisasisController extends Controller
         $jadwalImunisasi = jadwal_imunisasi::findOrFail($id);
         $todayDate = Carbon::now()->format('Y-m-d');
         $JenisImunisasis = Jenis_Imunisasi::pluck('nama', 'id')->all();
-        if ($jadwalImunisasi->tanggal >= $todayDate) {
+        if ($todayDate >= $jadwalImunisasi->tanggal) {
             $hide = '';
-        }
-        else
-        {
+            $hide2 = 'readonly';
+        } else {
             $hide = 'readonly';
+            $hide2 = '';
         }
         $Anaks = Anak::pluck('nama', 'id')->all();
         $Pesans = Pesans::pluck('jenis', 'id')->all();
         $Users = User::pluck('name', 'id')->all();
 
-        return view('jadwal_imunisasis.edit', compact('jadwalImunisasi', 'JenisImunisasis', 'Anaks', 'Pesans', 'Users', 'todayDate', 'hide'));
+        return view('jadwal_imunisasis.edit', compact('jadwalImunisasi', 'JenisImunisasis', 'Anaks', 'Pesans', 'Users', 'todayDate', 'hide','hide2'));
     }
 
     /**
@@ -215,9 +219,29 @@ class JadwalImunisasisController extends Controller
      */
     public function update($id, Request $request)
     {
+        $todayDate = Carbon::now()->format('Y-m-d');
+        $formatted_dt1 = Carbon::parse($todayDate);
+        $date = $request->waktu_pemberian;
+        $formatted_dt2 = Carbon::parse($date);
+        $diff = $formatted_dt1->diffInMonths($formatted_dt2);
+
+        $cek_status = DB::table('jadwal_imunisasis as ji')
+            ->join('jenis_imunisasis as jj', 'ji.jenis_imunisasis_id', '=', 'jj.id')
+            ->select('jj.waktu_tepat', 'jj.waktu_telat')
+            ->where('ji.jenis_imunisasis_id', $request->jenis_imunisasis_id)
+            ->first();
+       
+
         try {
             $data = $this->getData($request);
-
+            if (($diff <= $cek_status->waktu_tepat)&&($diff < $cek_status->waktu_telat)) {
+                $data['status']='Tepat Waktu';
+            } else {
+                if($diff >= $cek_status->waktu_telat)
+                {
+                    $data['status']='Terlambat';
+                }
+            }
             $jadwalImunisasi = jadwal_imunisasi::findOrFail($id);
             $jadwalImunisasi->update($data);
 
@@ -263,10 +287,10 @@ class JadwalImunisasisController extends Controller
     protected function getData(Request $request)
     {
         $rules = [
-            'jenis_imunisasis_id' => 'required',
-            'anaks_id' => 'required',
-            'tempat' => 'required|string|min:1|max:50',
-            'tanggal' => 'required',
+            'jenis_imunisasis_id' => 'nullable',
+            'anaks_id' => 'nullable',
+            'tempat' => 'nullable|string|min:1|max:50',
+            'tanggal' => 'nullable',
             'waktu_pemberian' => 'nullable',
             'berat_badan' => 'nullable',
             'panjang_badan' => 'nullable',
