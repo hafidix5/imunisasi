@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Ibu;
+use App\Models\ibu;
 use App\Models\anak;
 use Illuminate\Http\Request;
 use Exception;
@@ -40,7 +40,7 @@ class AnaksController extends Controller
             ->join('ibus as i','wk.id','=','i.wilayah_kerjas_id')
             ->join('anaks as an','i.id','=','an.ibus_id')
             ->select('an.id','an.nama','an.tgl_lahir','an.jenis_kelamin','i.nama as ibu')
-            ->groupBy('an.id')
+            ->groupBy('an.id','an.nama','an.tgl_lahir','an.jenis_kelamin','i.nama')
             ->paginate(25);
         }
         else
@@ -72,7 +72,7 @@ class AnaksController extends Controller
      */
     public function create()
     {
-        $Ibus = Ibu::pluck('nama','id')->all();
+        $Ibus = ibu::pluck('nama','id')->all();
         
         return view('anaks.create', compact('Ibus'));
     }
@@ -126,7 +126,7 @@ class AnaksController extends Controller
     public function edit($id)
     {
         $anak = anak::findOrFail($id);
-        $Ibus = Ibu::pluck('nama','id')->all();
+        $Ibus = ibu::pluck('nama','id')->all();
 
         return view('anaks.edit', compact('anak','Ibus'));
     }

@@ -57,7 +57,7 @@ class wilayah_kerjas extends Model
      */
     public function ibu()
     {
-        return $this->hasOne('App\Models\Ibu','wilayah_kerjas_id','id');
+        return $this->hasOne('App\Models\ibu','wilayah_kerjas_id','id');
     }
 
     /**
@@ -67,7 +67,7 @@ class wilayah_kerjas extends Model
      */
     public function usersWilayah()
     {
-        return $this->hasOne('App\Models\UsersWilayah','wilayah_kerjas_id','id');
+        return $this->hasOne('App\Models\users_wilayahs','wilayah_kerjas_id','id');
     }
 
 

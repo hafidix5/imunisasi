@@ -57,7 +57,7 @@ class pesans extends Model
      */
     public function riwayatPesan()
     {
-        return $this->hasOne('App\Models\RiwayatPesan','pesans_id','id');
+        return $this->hasOne('App\Models\riwayat_pesans','pesans_id','id');
     }
 
 

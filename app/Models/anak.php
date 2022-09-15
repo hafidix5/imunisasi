@@ -50,7 +50,7 @@ class anak extends Model
      */
     public function Ibu()
     {
-        return $this->belongsTo('App\Models\Ibu', 'ibus_id', 'id');
+        return $this->belongsTo('App\Models\ibu', 'ibus_id', 'id');
     }
 
     /**
@@ -60,7 +60,7 @@ class anak extends Model
      */
     public function jadwalImunisasi()
     {
-        return $this->hasOne('App\Models\JadwalImunisasi', 'anaks_id', 'id');
+        return $this->hasOne('App\Models\jadwal_imunisasi', 'anaks_id', 'id');
     }
 
     /**

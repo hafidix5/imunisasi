@@ -29,7 +29,7 @@
         <tr>
             <th>No</th>
             <th>Name</th>
-            <th>Email</th>
+            <th>Username</th>
             <th>Roles</th>
             <th width="280px">Action</th>
         </tr>

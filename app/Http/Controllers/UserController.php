@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
     
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\user;
 use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
@@ -27,7 +27,7 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        $data = User::orderBy('id','DESC')->SimplePaginate(15);
+        $data = user::orderBy('id','DESC')->SimplePaginate(15);
         return view('users.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
@@ -53,7 +53,7 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|unique:users,email',
             'password' => 'required|same:confirm-password',
             'roles' => 'required'
         ]);
@@ -61,7 +61,7 @@ class UserController extends Controller
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
     
-        $user = User::create($input);
+        $user = user::create($input);
         $user->assignRole($request->input('roles'));
     
         return redirect()->route('users.index')
@@ -76,7 +76,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
+        $user = user::find($id);
         return view('users.show',compact('user'));
     }
     
@@ -88,7 +88,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
+        $user = user::find($id);
         $roles = Role::pluck('name','name')->all();
         $userRole = $user->roles->pluck('name','name')->all();
     
@@ -106,7 +106,7 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$id,
+            'email' => 'required|unique:users,email,'.$id,
             'password' => 'same:confirm-password',
             'roles' => 'required'
         ]);
@@ -118,7 +118,7 @@ class UserController extends Controller
             $input = Arr::except($input,array('password'));    
         }
     
-        $user = User::find($id);
+        $user = user::find($id);
         $user->update($input);
         DB::table('model_has_roles')->where('model_id',$id)->delete();
     
@@ -136,7 +136,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        User::find($id)->delete();
+        user::find($id)->delete();
         return redirect()->route('users.index')
                         ->with('success','User deleted successfully');
     }

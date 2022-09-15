@@ -3,16 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Anak;
-use App\Models\Jenis_Imunisasi;
-use App\Models\Pesans;
-use App\Models\User;
+use App\Models\anak;
+use App\Models\jenis_imunisasi;
+use App\Models\pesans;
+use App\Models\user;
 use App\Models\jadwal_imunisasi;
 use Illuminate\Http\Request;
 use Exception;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use auth;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use Telegram\Bot\Api;
 use Illuminate\Support\Facades\DB;
@@ -69,14 +70,15 @@ class JadwalImunisasisController extends Controller
      */
     public function create()
     {
-        $JenisImunisasis = Jenis_Imunisasi::pluck('nama', 'id')->all();
-        $Anaks = Anak::pluck('nama', 'id')->all();
-        $Pesans = Pesans::pluck('jenis', 'id')->all();
-        $Users = User::pluck('name', 'id')->all();
+        $JenisImunisasis = jenis_jmunisasi::pluck('nama', 'id')->all();
+        $Anaks = anak::pluck('nama', 'id')->all();
+        $Pesans = pesans::pluck('jenis', 'id')->all();
+        $Users = user::pluck('name', 'id')->all();
         $todayDate = Carbon::now()->format('Y-m-d');
         $hide = 'readonly';
+        $hide2 = '';
 
-        return view('jadwal_imunisasis.create', compact('JenisImunisasis', 'Anaks', 'Pesans', 'Users', 'todayDate', 'hide'));
+        return view('jadwal_imunisasis.create', compact('JenisImunisasis', 'Anaks', 'Pesans', 'Users', 'todayDate', 'hide','hide2'));
     }
 
     /**
@@ -149,11 +151,17 @@ class JadwalImunisasisController extends Controller
     public function sync()
     {
         $total = 0;
+        $todayDate = Carbon::now()->format('Y-m-d');
+        
+        $yesterday = Carbon::yesterday()->format('Y-m-d');
+       
+        
         $datas = DB::select(
             'SELECT p.pesan, i.nama AS ibu,i.id_telegram,a.nama AS anak,jj.nama,ji.tanggal,ji.tempat,ji.status_pesan,ji.id FROM jadwal_imunisasis AS ji JOIN anaks AS a ON ji.anaks_id=a.id JOIN ibus AS i ON a.ibus_id=i.id JOIN pesans AS p ON ji.pesans_id=p.id
-        JOIN jenis_imunisasis AS jj ON ji.jenis_imunisasis_id=jj.id WHERE ji.status_pesan=? AND ji.tanggal>?',
-            ['0', '2022-09-12'],
+        JOIN jenis_imunisasis AS jj ON ji.jenis_imunisasis_id=jj.id WHERE ji.status_pesan=? AND ? = DATE_SUB(ji.tanggal, INTERVAL 1 day)',
+            ['0', $todayDate],
         );
+        
         foreach ($datas as $data) {
             $this->send2($data->id);
             DB::table('jadwal_imunisasis')
@@ -194,7 +202,7 @@ class JadwalImunisasisController extends Controller
     {
         $jadwalImunisasi = jadwal_imunisasi::findOrFail($id);
         $todayDate = Carbon::now()->format('Y-m-d');
-        $JenisImunisasis = Jenis_Imunisasi::pluck('nama', 'id')->all();
+        $JenisImunisasis = jenis_imunisasi::pluck('nama', 'id')->all();
         if ($todayDate >= $jadwalImunisasi->tanggal) {
             $hide = '';
             $hide2 = 'readonly';
@@ -202,9 +210,9 @@ class JadwalImunisasisController extends Controller
             $hide = 'readonly';
             $hide2 = '';
         }
-        $Anaks = Anak::pluck('nama', 'id')->all();
-        $Pesans = Pesans::pluck('jenis', 'id')->all();
-        $Users = User::pluck('name', 'id')->all();
+        $Anaks = anak::pluck('nama', 'id')->all();
+        $Pesans = pesans::pluck('jenis', 'id')->all();
+        $Users = user::pluck('name', 'id')->all();
 
         return view('jadwal_imunisasis.edit', compact('jadwalImunisasi', 'JenisImunisasis', 'Anaks', 'Pesans', 'Users', 'todayDate', 'hide','hide2'));
     }

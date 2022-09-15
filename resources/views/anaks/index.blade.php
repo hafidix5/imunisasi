@@ -57,7 +57,12 @@
                         <tr>
                             <td>{{ $anak->nama }}</td>
                             <td>{{ $anak->tgl_lahir }}</td>
-                            <td>{{ $anak->jenis_kelamin }}</td>
+                            @if ($anak->jenis_kelamin=='p')
+                            <td>Perempuan</td>
+                                @else
+                                <td>Laki-laki</td>
+                            @endif
+                            {{-- <td>{{ $anak->jenis_kelamin }}</td> --}}
                             <td>{{ $anak->ibu }}</td>
 
                             <td>

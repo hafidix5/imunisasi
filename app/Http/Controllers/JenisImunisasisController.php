@@ -27,6 +27,7 @@ class JenisImunisasisController extends Controller
 
     public function index()
     {
+        
         $jenisImunisasis = jenis_imunisasi::paginate(25);
 
         return view('jenis_imunisasis.index', compact('jenisImunisasis'));
@@ -39,7 +40,7 @@ class JenisImunisasisController extends Controller
      */
     public function create()
     {
-        
+                
         
         return view('jenis_imunisasis.create');
     }

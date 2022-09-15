@@ -68,7 +68,7 @@ class jadwal_imunisasi extends Model
      */
     public function JenisImunisasi()
     {
-        return $this->belongsTo('App\Models\Jenis_Imunisasi','jenis_imunisasis_id','id');
+        return $this->belongsTo('App\Models\jenis_imunisasi','jenis_imunisasis_id','id');
     }
 
     /**
@@ -78,7 +78,7 @@ class jadwal_imunisasi extends Model
      */
     public function Anak()
     {
-        return $this->belongsTo('App\Models\Anak','anaks_id','id');
+        return $this->belongsTo('App\Models\anak','anaks_id','id');
     }
 
     /**
@@ -88,7 +88,7 @@ class jadwal_imunisasi extends Model
      */
     public function Pesan()
     {
-        return $this->belongsTo('App\Models\Pesans','pesans_id','id');
+        return $this->belongsTo('App\Models\pesans','pesans_id','id');
     }
 
     /**
@@ -98,7 +98,7 @@ class jadwal_imunisasi extends Model
      */
     public function User()
     {
-        return $this->belongsTo('App\Models\User','users_id','id');
+        return $this->belongsTo('App\Models\user','users_id','id');
     }
 
     /**

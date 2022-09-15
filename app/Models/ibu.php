@@ -70,7 +70,7 @@ class ibu extends Model
      */
     public function riwayatPesan()
     {
-        return $this->hasOne('App\Models\RiwayatPesan', 'ibus_id', 'id');
+        return $this->hasOne('App\Models\riwayat_pesans', 'ibus_id', 'id');
     }
 
     /**

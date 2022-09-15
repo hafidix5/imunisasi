@@ -59,7 +59,7 @@ class jenis_imunisasi extends Model
      */
     public function jadwalImunisasi()
     {
-        return $this->hasOne('App\Models\JadwalImunisasi','jenis_imunisasis_id','id');
+        return $this->hasOne('App\Models\jadwal_imunisasi','jenis_imunisasis_id','id');
     }
 
 

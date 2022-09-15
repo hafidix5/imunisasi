@@ -31,6 +31,7 @@ class IbusController extends Controller
 
     public function index()
     {
+        
         $cek_roles=DB::select('SELECT r.name FROM users AS u JOIN roles AS r ON u.id=r.id WHERE u.id=?',[auth::id()]);
         if($cek_roles[0]->name=='Admin')
         {
@@ -39,16 +40,19 @@ class IbusController extends Controller
             ->join('wilayah_kerjas AS wk','uw.wilayah_kerjas_id','=','wk.id')
             ->join('ibus AS i','wk.id','=','i.wilayah_kerjas_id')
             ->select('i.id','i.nama','i.tgl_lahir','i.no_hp','i.alamat','i.id_telegram','wk.nama as wilayah')
-            ->groupBy('i.id')
+            ->groupBy('i.id','i.nama','i.tgl_lahir','i.no_hp','i.alamat','i.id_telegram','wk.nama')
             ->paginate(25);
         }
         else
         {            
-            $ibus=DB::table('users as u')->join('users_wilayahs AS uw','u.id','=','uw.users_id')
-            ->join('wilayah_kerjas AS wk','uw.wilayah_kerjas_id','=','wk.id')
-            ->join('ibus AS i','wk.id','=','i.wilayah_kerjas_id')
-            ->select('i.id','i.nama','i.tgl_lahir','i.no_hp','i.alamat','i.id_telegram','wk.nama as wilayah')
-            ->where('u.id',auth::id())->paginate(25);
+           
+                $ibus=DB::table('users as u')->join('users_wilayahs AS uw','u.id','=','uw.users_id')
+                ->join('wilayah_kerjas AS wk','uw.wilayah_kerjas_id','=','wk.id')
+                ->join('ibus AS i','wk.id','=','i.wilayah_kerjas_id')
+                ->select('i.id','i.nama','i.tgl_lahir','i.no_hp','i.alamat','i.id_telegram','wk.nama as wilayah')
+                ->where('u.id',auth::id())->paginate(25);
+            
+           
 
            /*  $ibus=DB::select('SELECT i.id,i.nama,i.tgl_lahir,i.no_hp,i.alamat,i.id_telegram,
             wk.nama as wilayah FROM users AS u JOIN users_wilayahs AS uw ON
@@ -127,7 +131,7 @@ class IbusController extends Controller
         $activitys = Telegram::getUpdates();
         $idtele=null;
         foreach ($activitys as $activity) {
-            if($activity->message->text=="085274503739")
+            if($activity->message->text==$ibu->no_hp)
             {
                 $idtele=$activity->message->chat->id;
             }  

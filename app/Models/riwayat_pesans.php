@@ -66,7 +66,7 @@ class riwayat_pesans extends Model
      */
     public function Ibu()
     {
-        return $this->belongsTo('App\Models\Ibu','ibus_id','id');
+        return $this->belongsTo('App\Models\ibu','ibus_id','id');
     }
 
 

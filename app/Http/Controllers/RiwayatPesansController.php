@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Ibu;
-use App\Models\Pesans;
+use App\Models\ibu;
+use App\Models\pesans;
 use App\Models\riwayat_pesans;
 use Illuminate\Http\Request;
 use Exception;
@@ -34,8 +34,8 @@ class RiwayatPesansController extends Controller
      */
     public function create()
     {
-        $Pesans = Pesans::pluck('jenis','id')->all();
-        $Ibus = Ibu::pluck('nama','id')->all();
+        $Pesans = pesans::pluck('jenis','id')->all();
+        $Ibus = ibu::pluck('nama','id')->all();
         
         return view('riwayat_pesans.create', compact('Pesans','Ibus'));
     }
@@ -88,8 +88,8 @@ class RiwayatPesansController extends Controller
     public function edit($id)
     {
         $riwayatPesans = riwayat_pesans::findOrFail($id);
-        $Pesans = Pesan::pluck('jenis','id')->all();
-$Ibus = Ibu::pluck('id','id')->all();
+        $Pesans = pesan::pluck('jenis','id')->all();
+$Ibus = ibu::pluck('id','id')->all();
 
         return view('riwayat_pesans.edit', compact('riwayatPesans','Pesans','Ibus'));
     }

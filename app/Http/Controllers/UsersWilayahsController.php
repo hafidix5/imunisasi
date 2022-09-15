@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\user;
 use App\Models\users_wilayahs;
 use App\Models\wilayah_kerjas;
 use Illuminate\Http\Request;
@@ -39,7 +39,7 @@ class UsersWilayahsController extends Controller
      */
     public function create()
     {
-        $Users = User::pluck('name','id')->all();
+        $Users = user::pluck('name','id')->all();
         $wilayah_kerjas = wilayah_kerjas::pluck('nama','id')->all();
         
         return view('users_wilayahs.create', compact('Users','wilayah_kerjas'));
@@ -93,7 +93,7 @@ class UsersWilayahsController extends Controller
     public function edit($id)
     {
         $usersWilayahs = users_wilayahs::findOrFail($id);
-        $Users = User::pluck('name','id')->all();
+        $Users = user::pluck('name','id')->all();
         $wilayah_kerjas = wilayah_kerjas::pluck('nama','id')->all();
 
         return view('users_wilayahs.edit', compact('usersWilayahs','Users','wilayah_kerjas'));

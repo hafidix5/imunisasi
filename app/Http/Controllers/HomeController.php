@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\jenis_imunisasi;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,10 @@ class HomeController extends Controller
      */
     public function index()
     {
+        /* $jenisImunisasis = jenis_imunisasi::pluck('id');
+        
+        $d=json_encode($jenisImunisasis->toArray());
+        dd($d); */
         return view('home');
     }
 }
