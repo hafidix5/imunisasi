@@ -70,7 +70,7 @@ class JadwalImunisasisController extends Controller
      */
     public function create()
     {
-        $JenisImunisasis = jenis_jmunisasi::pluck('nama', 'id')->all();
+        $JenisImunisasis = jenis_imunisasi::pluck('nama', 'id')->all();
         $Anaks = anak::pluck('nama', 'id')->all();
         $Pesans = pesans::pluck('jenis', 'id')->all();
         $Users = user::pluck('name', 'id')->all();
@@ -94,7 +94,7 @@ class JadwalImunisasisController extends Controller
         $data = DB::select(
             'SELECT p.pesan, i.nama AS ibu,i.id_telegram,a.nama AS anak,jj.nama,ji.tanggal,ji.tempat FROM jadwal_imunisasis AS ji JOIN anaks AS a ON ji.anaks_id=a.id JOIN ibus AS i ON a.ibus_id=i.id JOIN pesans AS p ON ji.pesans_id=p.id
         JOIN jenis_imunisasis AS jj ON ji.jenis_imunisasis_id=jj.id WHERE ji.id=?',
-            [$id],
+            [$id]
         );
 
         $text = str_replace(['[nama ibu]', '[tanggal imunisasi]', '[nama anak]', '[jenis imunisasi]', '[tempat imunisasi]'], [$data[0]->ibu, $data[0]->tanggal, $data[0]->anak, $data[0]->nama, $data[0]->tempat], $data[0]->pesan);
@@ -111,7 +111,7 @@ class JadwalImunisasisController extends Controller
         $data = DB::select(
             'SELECT p.pesan, i.nama AS ibu,i.id_telegram,a.nama AS anak,jj.nama,ji.tanggal,ji.tempat FROM jadwal_imunisasis AS ji JOIN anaks AS a ON ji.anaks_id=a.id JOIN ibus AS i ON a.ibus_id=i.id JOIN pesans AS p ON ji.pesans_id=p.id
         JOIN jenis_imunisasis AS jj ON ji.jenis_imunisasis_id=jj.id WHERE ji.id=?',
-            [$id],
+            [$id]
         );
 
         $text = str_replace(['[nama ibu]', '[tanggal imunisasi]', '[nama anak]', '[jenis imunisasi]', '[tempat imunisasi]'], [$data[0]->ibu, $data[0]->tanggal, $data[0]->anak, $data[0]->nama, $data[0]->tempat], $data[0]->pesan);
@@ -159,7 +159,7 @@ class JadwalImunisasisController extends Controller
         $datas = DB::select(
             'SELECT p.pesan, i.nama AS ibu,i.id_telegram,a.nama AS anak,jj.nama,ji.tanggal,ji.tempat,ji.status_pesan,ji.id FROM jadwal_imunisasis AS ji JOIN anaks AS a ON ji.anaks_id=a.id JOIN ibus AS i ON a.ibus_id=i.id JOIN pesans AS p ON ji.pesans_id=p.id
         JOIN jenis_imunisasis AS jj ON ji.jenis_imunisasis_id=jj.id WHERE ji.status_pesan=? AND ? = DATE_SUB(ji.tanggal, INTERVAL 1 day)',
-            ['0', $todayDate],
+            ['0', $todayDate]
         );
         
         foreach ($datas as $data) {

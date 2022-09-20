@@ -65,7 +65,7 @@ class users_wilayahs extends Model
      */
     public function User()
     {
-        return $this->belongsTo('App\Models\user','users_id','id');
+        return $this->belongsTo('App\Models\User','users_id','id');
     }
 
 

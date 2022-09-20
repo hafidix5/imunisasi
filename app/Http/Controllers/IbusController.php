@@ -11,6 +11,8 @@ use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use Auth;
 use Illuminate\Support\Facades\DB;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Client;
 
 class IbusController extends Controller
 {
@@ -128,7 +130,26 @@ class IbusController extends Controller
     {
         $ibu = ibu::findOrFail($id);
         $WilayahKerjas = wilayah_kerjas::pluck('jenis','id')->all();
-        $activitys = Telegram::getUpdates();
+
+        $client = new Client(); 
+        $url="https://api.telegram.org/bot5619949340:AAHNn3zZ0qV0nUZFgc7-vQbFsMLizm7j0O8/getUpdates";
+
+
+        $response = $client->request('GET', $url, [
+            'verify'  => false,
+        ]);
+
+        $responseBodys = json_decode($response->getBody())->result;
+        $idtele=null;
+        foreach ($responseBodys as $responseBody) {
+            if($responseBody->message->text==$ibu->no_hp)
+            {
+                $idtele=$responseBody->message->chat->id;
+            }  
+                  
+        }
+         
+        /* $activitys = Telegram::getUpdates();
         $idtele=null;
         foreach ($activitys as $activity) {
             if($activity->message->text==$ibu->no_hp)
@@ -136,7 +157,7 @@ class IbusController extends Controller
                 $idtele=$activity->message->chat->id;
             }  
                   
-        }
+        } */
         
 
         return view('ibus.edit', compact('ibu','WilayahKerjas','idtele'));

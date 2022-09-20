@@ -96,9 +96,9 @@ class jadwal_imunisasi extends Model
      *
      * @return App\Models\User
      */
-    public function User()
+    public function user()
     {
-        return $this->belongsTo('App\Models\user','users_id','id');
+        return $this->belongsTo('App\Models\User','users_id','id');
     }
 
     /**
